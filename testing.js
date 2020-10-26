@@ -28,31 +28,23 @@ var render = Render.create({
     }
 });
 
-
 Render.run(render);
 var runner = Runner.create();
 Runner.run(runner, engine);
 
-// stimulus parameter
+
+// ---------------------------------------------------------------------------------------------------------------------
+// stimulus parameters
 var xvelocity = 2.4; // 1 slow vs 2.4 fast
 var blink_position = render.options.width / (1.5*2); // time to blink in patient object, 3 early vs 1.5 late
-var bounding_box_type = 1; // 1 for coarse box, 2 for semi-coarse, 3 for precise box
+var bounding_box_type = 2; // 1 for coarse box, 2 for semi-coarse, 3 for precise box
 var type2_margin = 23 / 2; // type 2 use only: margin for the semi-coarse bounding box (between coarse and precise boxes)
-
-
-// helpper variables
-var Astarted = false;
-var Bstarted = false;
-var Bshown = false;
-var t = 0; // current timestamp
-var collision_time = Infinity; // record collision timestamp
-var temp_touch = false; // for type2 use only: record whether boxA touches boxB's coarse box
-var temp_x = Infinity; // for type2 use only: record collision position of boxA when touching coarse box
 var temporal_delay = 2; // time between collision and when patient starts to move, set to 2 to have frame_t A stops B stops
 
 
-
+// ---------------------------------------------------------------------------------------------------------------------
 // objects
+
 var ground = Bodies.rectangle(500, 350, 1000, 5, {label: 'ground', isStatic: true, friction: 0, render:{ fillStyle: 'black'}});
 // Vertices.fromPath('104 20 42 80 25 125 127 117 85 107 104 98'); // A front
 // Vertices.fromPath('41 23 46 102 66 110 23 119 127 125 105 81'); // A back
@@ -67,66 +59,108 @@ var ground = Bodies.rectangle(500, 350, 1000, 5, {label: 'ground', isStatic: tru
 // boxA = Bodies.rectangle(100, 340, 80, 80, {render: {fillStyle:'#'+Math.floor(Math.random()*16777215).toString(16)}}); 
 // boxB = Bodies.rectangle(450, 340, 80, 80);
 
+function makeBox(x, y, points, label, color, xvelocity) {
+    return(Bodies.fromVertices(x, y, points,
+            {
+                label: label,
+                render: {
+                    fillStyle: color,
+                    strokeStyle: color,
+                    lineWidth: 1,
+                    visible: true
+                },
+                friction: 0,
+                velocity: {x: xvelocity, y:0}
+            }, true)
+    )
+}
+
 var pointsA = Vertices.fromPath('96 12 59 18 43 75 101 137 105 82 96 94 93 72 105 40'); // B back
 color = '#'+Math.floor(Math.random()*16777215).toString(16);
-var boxA = Bodies.fromVertices(0, 250, pointsA, {
-    label: 'boxA',
-    render: {
-        fillStyle: color,
-        strokeStyle: color,
-        lineWidth: 1,
-        visible: true
-    }, friction: 0
-}, true);
+
+var boxA = makeBox(0, 250, pointsA, 'boxA', color, 0)
 Body.setAngle(boxA, -Math.PI/1.7);
 
 var pointsB = Vertices.fromPath('108 25 35 54 38 123 49 106 81 119 110 119 105 109 113 109 99 96 66 86 115 91 54 63'); // D front
 color = '#'+Math.floor(Math.random()*16777215).toString(16);
-var boxB = Bodies.fromVertices(render.options.width/2, 200, pointsB, {
-    label: 'boxB',
-    render: {
-        fillStyle: color,
-        strokeStyle: color,
-        lineWidth: 1,
-        visible: true
-    }, friction: 0, velocity: {x: xvelocity, y:0}
-}, true);
+
+var boxB = makeBox(render.options.width/2, 200, pointsB, 'boxB', color, xvelocity)
 Body.setAngle(boxB, -Math.PI*0.98);
 
 
-
-// collision detection for type 3 (precise)
-Matter.Events.on(engine, 'collisionStart', function(event) {
-    let pairs = event.pairs;
-    pairs.forEach(function(pair) {
-        if (bounding_box_type == 3) {
-            if ((pair.bodyA.label == "boxA" && pair.bodyB.label == "boxB") || (pair.bodyA.label == "boxB" && pair.bodyB.label == "boxA")){
-                Astarted = false;
-                Body.setVelocity(boxA, {x:0, y:0});
-                collision_time = t;
-                console.log('type 3 x position', boxA.position.x);
-            } // end if
-        } // end if
-    });
-}); 
-
-
 // disable gravity
-engine.world.gravity.y = 0; 
+engine.world.gravity.y = 0;
 // add all objects to world, ready to run
 World.add(engine.world, [boxA, ground]);
 // add mouse control
 var mouse = Mouse.create(render.canvas),
-mouseConstraint = MouseConstraint.create(engine, {
-    mouse: mouse,
-    constraint: {
-        stiffness: 0.2,
-        render: {
-            visible: false
+    mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: {
+            stiffness: 0.2,
+            render: {
+                visible: false
+            }
         }
-    }
-});
+    });
 World.add(engine.world, mouseConstraint);
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+// collision detection
+
+// stop A moving when it hits B
+function stopA () {
+    Astarted = false;
+    Body.setVelocity(boxA, {x: 0, y: 0});
+    collision_time = t;
+}
+
+function type1Collision () {
+    if (Astarted==true){
+        stopA();
+        console.log('type 1 x position', boxA.position.x);
+    }
+}
+
+function type2Collision () {
+    // touches the coarse box
+    if (temp_touch==false){
+        temp_touch = true;
+        temp_x = boxA.position.x;
+    }
+    // half way passes the coarse box
+    if (Astarted==true && temp_touch && (boxA.position.x >= temp_x + type2_margin)){
+        stopA();
+        console.log('type 2 x position', boxA.position.x);
+    }
+}
+
+// collision detection for type 3 (precise)
+if (bounding_box_type == 3) {
+    Matter.Events.on(engine, 'collisionStart', function (event) {
+        let pairs = event.pairs;
+        pairs.forEach(function (pair) {
+            if ((pair.bodyA.label == "boxA" && pair.bodyB.label == "boxB") || (pair.bodyA.label == "boxB" && pair.bodyB.label == "boxA")) {
+                stopA();
+                console.log('type 3 x position', boxA.position.x);
+            }
+        });
+    });
+}
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+// main loop
+
+// helper variables
+var Astarted = false;
+var Bstarted = false;
+var Bshown = false;
+var t = 0; // current timestamp
+var collision_time = Infinity; // record collision timestamp
+var temp_touch = false; // for type2 use only: record whether boxA touches boxB's coarse box
+var temp_x = Infinity;  // for type2 use only: record collision position of boxA when touching coarse box
 
 
 // update frame
@@ -136,47 +170,36 @@ World.add(engine.world, mouseConstraint);
     window.requestAnimationFrame(run);
     Engine.update(engine, 1);
     render.mouse = mouse;
-    
-    if (t==1){ // start boxA
+
+    // start boxA
+    if (t==1){
         Body.setVelocity( boxA, {x: xvelocity, y: 0});
         Astarted = true;
     }
-    if (Bshown==false && boxA.position.x >= blink_position){ // blink in boxB
+    // blink in boxB
+    if (Bshown==false && boxA.position.x >= blink_position) {
         Bshown = true;
         World.add(engine.world, boxB);
     }
-    
 
     // collision for coarse bounding box
     if (Matter.SAT.collides(boxA, boxB).collided){
-        if (bounding_box_type==1){  // type 1 bounding box
-            if (Astarted==true){
-                Body.setVelocity(boxA, {x:0, y:0});
-                Astarted = false;
-                collision_time = t;
-                console.log('type 1 x position', boxA.position.x);
-            }
-        } else if (bounding_box_type==2){ // type 2 bounding box
-            if (temp_touch==false){ // touches the coarse box
-                temp_touch = true;
-                temp_x = boxA.position.x;
-            }
-            if (Astarted==true && temp_touch && (boxA.position.x>=temp_x+type2_margin)){ // half way passes the coarse box
-                Body.setVelocity(boxA, {x:0, y:0});
-                Astarted = false;
-                collision_time = t;
-            }
+        if (bounding_box_type==1){
+            type1Collision();
+        }
+        if (bounding_box_type==2){
+            type2Collision();
         }
     }
 
+    // start boxB if there was a collision
     if (Astarted==false && t==collision_time+temporal_delay){
         Bstarted = true;
     }
-
     
     // maintain constant velocity
     if (Astarted){
-        Body.setVelocity( boxA, {x: xvelocity, y: 0}); 
+        Body.setVelocity(boxA, {x: xvelocity, y: 0});
     }
     if (Bstarted){
         Body.setVelocity(boxB, {x:xvelocity, y: 0})
