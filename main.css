@@ -1,0 +1,115 @@
+body{
+    font-family: arial;
+    margin:15px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+
+
+.secondary{
+    background: #888;
+    color:white;
+}
+
+#special{
+    background: #333;
+    color: white;
+}
+
+header{
+    background: #999;
+    color: white;
+    margin: 0;
+}
+
+header h1{
+    margin: 0;
+    display: inline;
+}
+
+nav ul{
+    margin: 0;
+    display: inline;
+}
+
+nav ul li {
+    background: black;
+    color: white;
+    display: inline-block;
+    list-style-type: none;
+    margin: 5px;
+    padding: 5px 15px;
+}
+
+nav ul li a{
+    color: white;
+}
+
+.row {
+    clear: both;
+}
+
+div .col {
+    float: left;
+    background: #333;
+    width: 31%;
+    margin: .5%;
+    padding: 10px .5%;
+    border-radius: 5px;
+}
+
+
+
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+  }
+  
+  /* The slider itself */
+  .slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 800px; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+  }
+  
+  /* Mouse-over effects */
+  .slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }
+  
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+  }

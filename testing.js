@@ -1,0 +1,186 @@
+// module aliases
+var Engine = Matter.Engine,
+    Render = Matter.Render,
+    World = Matter.World,
+    Bodies = Matter.Bodies,
+    Body = Matter.Body,
+    Vertices = Matter.Vertices,
+    Composites = Matter.Composites,
+    Runner = Matter.Runner,
+    MouseConstraint = Matter.MouseConstraint,
+    Mouse = Matter.Mouse,
+    Runner = Matter.Runner,
+    Events = Matter.Events;
+
+// initialize engine, render, runner
+var engine = Engine.create();
+var render = Render.create({
+    element: document.body,
+    engine: engine,
+    options: {
+        width: 1000,
+        height: 400,
+        wireframes: false,
+        showAngleIndicator: false,
+        showConvexHulls: false,
+        showCollisions: false,
+        background: 'black'
+    }
+});
+
+
+Render.run(render);
+var runner = Runner.create();
+Runner.run(runner, engine);
+
+// stimulus parameter
+var xvelocity = 2.4; // 1 slow vs 2.4 fast
+var blink_position = render.options.width / (1.5*2); // time to blink in patient object, 3 early vs 1.5 late
+var bounding_box_type = 1; // 1 for coarse box, 2 for semi-coarse, 3 for precise box
+var type2_margin = 23 / 2; // type 2 use only: margin for the semi-coarse bounding box (between coarse and precise boxes)
+
+
+// helpper variables
+var Astarted = false;
+var Bstarted = false;
+var Bshown = false;
+var t = 0; // current timestamp
+var collision_time = Infinity; // record collision timestamp
+var temp_touch = false; // for type2 use only: record whether boxA touches boxB's coarse box
+var temp_x = Infinity; // for type2 use only: record collision position of boxA when touching coarse box
+var temporal_delay = 2; // time between collision and when patient starts to move, set to 2 to have frame_t A stops B stops
+
+
+
+// objects
+var ground = Bodies.rectangle(500, 350, 1000, 5, {label: 'ground', isStatic: true, friction: 0, render:{ fillStyle: 'black'}});
+// Vertices.fromPath('104 20 42 80 25 125 127 117 85 107 104 98'); // A front
+// Vertices.fromPath('41 23 46 102 66 110 23 119 127 125 105 81'); // A back
+// Vertices.fromPath('59 14 95 24 106 79 45 136 44 82 52 94 56 70 48 43'); // B front
+// Vertices.fromPath('96 12 59 18 43 75 101 137 105 82 96 94 93 72 105 40'); // B back
+// Vertices.fromPath('42 20 45 114 105 130 71 97 83 82 107 78 83 40 66 24'); // C front
+// Vertices.fromPath('105 19 80 23 68 36 43 77 65 81 79 96 47 130 106 112'); // C back
+// Vertices.fromPath('108 25 35 54 38 123 49 106 81 119 110 119 105 109 113 109 99 96 66 86 115 91 54 63'); // D front
+// Vertices.fromPath('40 28 113 55 113 122 102 106 70 119 41 119 45 110 38 109 49 98 81 85 35 89 92 64'); // D back
+// Vertices.fromPath('34 33 105 25 98 82 116 47 91 122 63 42 44 109 72 96 47 123 35 119'); // E front
+// Vertices.fromPath('43 27 113 32 117 117 105 123 80 98 108 109 84 42 61 123 33 51 51 82'); // E back
+// boxA = Bodies.rectangle(100, 340, 80, 80, {render: {fillStyle:'#'+Math.floor(Math.random()*16777215).toString(16)}}); 
+// boxB = Bodies.rectangle(450, 340, 80, 80);
+
+var pointsA = Vertices.fromPath('96 12 59 18 43 75 101 137 105 82 96 94 93 72 105 40'); // B back
+color = '#'+Math.floor(Math.random()*16777215).toString(16);
+var boxA = Bodies.fromVertices(0, 250, pointsA, {
+    label: 'boxA',
+    render: {
+        fillStyle: color,
+        strokeStyle: color,
+        lineWidth: 1,
+        visible: true
+    }, friction: 0
+}, true);
+Body.setAngle(boxA, -Math.PI/1.7);
+
+var pointsB = Vertices.fromPath('108 25 35 54 38 123 49 106 81 119 110 119 105 109 113 109 99 96 66 86 115 91 54 63'); // D front
+color = '#'+Math.floor(Math.random()*16777215).toString(16);
+var boxB = Bodies.fromVertices(render.options.width/2, 200, pointsB, {
+    label: 'boxB',
+    render: {
+        fillStyle: color,
+        strokeStyle: color,
+        lineWidth: 1,
+        visible: true
+    }, friction: 0, velocity: {x: xvelocity, y:0}
+}, true);
+Body.setAngle(boxB, -Math.PI*0.98);
+
+
+
+// collision detection for type 3 (precise)
+Matter.Events.on(engine, 'collisionStart', function(event) {
+    let pairs = event.pairs;
+    pairs.forEach(function(pair) {
+        if (bounding_box_type == 3) {
+            if ((pair.bodyA.label == "boxA" && pair.bodyB.label == "boxB") || (pair.bodyA.label == "boxB" && pair.bodyB.label == "boxA")){
+                Astarted = false;
+                Body.setVelocity(boxA, {x:0, y:0});
+                collision_time = t;
+                console.log('type 3 x position', boxA.position.x);
+            } // end if
+        } // end if
+    });
+}); 
+
+
+// disable gravity
+engine.world.gravity.y = 0; 
+// add all objects to world, ready to run
+World.add(engine.world, [boxA, ground]);
+// add mouse control
+var mouse = Mouse.create(render.canvas),
+mouseConstraint = MouseConstraint.create(engine, {
+    mouse: mouse,
+    constraint: {
+        stiffness: 0.2,
+        render: {
+            visible: false
+        }
+    }
+});
+World.add(engine.world, mouseConstraint);
+
+
+// update frame
+(function run() {
+    
+    // regular updates
+    window.requestAnimationFrame(run);
+    Engine.update(engine, 1);
+    render.mouse = mouse;
+    
+    if (t==1){ // start boxA
+        Body.setVelocity( boxA, {x: xvelocity, y: 0});
+        Astarted = true;
+    }
+    if (Bshown==false && boxA.position.x >= blink_position){ // blink in boxB
+        Bshown = true;
+        World.add(engine.world, boxB);
+    }
+    
+
+    // collision for coarse bounding box
+    if (Matter.SAT.collides(boxA, boxB).collided){
+        if (bounding_box_type==1){  // type 1 bounding box
+            if (Astarted==true){
+                Body.setVelocity(boxA, {x:0, y:0});
+                Astarted = false;
+                collision_time = t;
+                console.log('type 1 x position', boxA.position.x);
+            }
+        } else if (bounding_box_type==2){ // type 2 bounding box
+            if (temp_touch==false){ // touches the coarse box
+                temp_touch = true;
+                temp_x = boxA.position.x;
+            }
+            if (Astarted==true && temp_touch && (boxA.position.x>=temp_x+type2_margin)){ // half way passes the coarse box
+                Body.setVelocity(boxA, {x:0, y:0});
+                Astarted = false;
+                collision_time = t;
+            }
+        }
+    }
+
+    if (Astarted==false && t==collision_time+temporal_delay){
+        Bstarted = true;
+    }
+
+    
+    // maintain constant velocity
+    if (Astarted){
+        Body.setVelocity( boxA, {x: xvelocity, y: 0}); 
+    }
+    if (Bstarted){
+        Body.setVelocity(boxB, {x:xvelocity, y: 0})
+    }
+
+    t = t + 1;
+})();
