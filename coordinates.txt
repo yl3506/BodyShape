@@ -1,0 +1,279 @@
+---------------------------------------------------------------
+pilot stimulus parameters
+
+run on ubuntu, otherwise object speed may vary
+
+var temporal_delay = 2; // time between collision and when patient starts to move, set to 2 to have frame_t A stops B stops
+var xvelocity = 2.4; // 1 slow vs 2.4 fast
+var blink_position = render.options.width / (1.5*2); // time to blink in patient object, 4 early vs 1.5 late
+var bounding_box_type = 4; // 1 for coarse box, 2 for semi-coarse, 3 for precise box, 4 for collision with exact position
+
+---------------------------------------------------------------
+
+formAfront 
+104,20
+42,80
+25,125
+127,117
+85,107
+104,98
+var boxB = Bodies.fromVertices(render.options.width/2, 230, pointsB);
+Body.setAngle(boxB, -Math.PI);
+type2_margin = (413.7-387.7)/2;
+var spatial_gap = 89 + ((413.7-387.7)/2)*0;
+
+
+formAback // convex side
+41,23
+46,102
+66,110
+23,119
+127,125
+105,81
+var boxB = Bodies.fromVertices(render.options.width/2, 230, pointsB);
+Body.setAngle(boxB, -Math.PI);
+var spatial_gap = 109; 119; 129;
+var spatial_gap = 109 + ((413.7-387.7)/2)*0;
+---------------------------------------------------------------
+
+formBfront // convex side
+59,14
+95,24
+106,79
+45,136
+44,82
+52,94
+56,70
+48,43
+var boxB = Bodies.fromVertices(render.options.width/2, 240, pointsB);
+Body.setAngle(boxB, -Math.PI*1.25);
+var spatial_gap = 95; 104; 114;
+var spatial_gap = 95 + ((423.2-411.4)/2)*0; 
+
+
+formBback
+96,12
+59,18
+43,75
+101,137
+105,82
+96,94
+93,72
+105,40
+var boxB = Bodies.fromVertices(render.options.width/2, 215, pointsB);
+Body.setAngle(boxB, -Math.PI);
+type2_margin = (423.2-411.4)/3;
+var spatial_gap = 80 + ((423.2-411.4)/2)*0;
+---------------------------------------------------------------
+
+formCfront
+42,20
+45,114
+105,130
+71,97
+83,82
+107,78
+83,40
+66,24
+var boxB = Bodies.fromVertices(render.options.width/2, 235, pointsB);
+Body.setAngle(boxB, -Math.PI*1.1);
+type2_margin = (418.5-392.4)/2;
+var spatial_gap = 85 + ((418.5-392.4)/2)*0;
+
+
+formCback // convex side
+105,19
+80,23
+68,36
+43,77
+65,81
+79,96
+47,130
+106,112
+var boxB = Bodies.fromVertices(render.options.width/2, 230, pointsB);
+Body.setAngle(boxB, -Math.PI*1);
+var spatial_gap = 89; 99; 109;
+var spatial_gap = 89 + ((418.5-392.4)/2)*0;
+---------------------------------------------------------------
+
+formDfront // convex side
+108,25
+35,54
+38,123
+49,106
+81,119
+110,119
+105,109
+113,109
+99,96
+66,86
+115,91
+54,63
+var boxB = Bodies.fromVertices(render.options.width/2, 235, pointsB);
+var spatial_gap = 99; 109; 119;
+var spatial_gap = 99 + ((420.8-387.7)/2)*0;
+
+
+
+formDback
+40,28
+113,55
+113,122
+102,106
+70,119
+41,119
+45,110
+38,109
+49,98
+81,85
+35,89
+92,64
+var boxB = Bodies.fromVertices(render.options.width/2, 240, pointsB);
+Body.setAngle(boxB, -Math.PI*0.07);
+type2_margin = (420.8-387.7)/2;
+var spatial_gap = 84 + ((420.8-387.7)/2)*0; 
+---------------------------------------------------------------
+
+regular box
+
+Vertices.fromPath('0 0 0 80 80 80 80 0'); // regular box
+var spatial_gap = 84 + 10*3; 
+var boxA = makeBox(0, 250, pointsA, 'boxA', color, 0)
+var boxB = makeBox(render.options.width/2, 250, pointsB, 'boxB', color, xvelocity)
+
+---------------------------------------------------------------
+
+formEfront
+34,33
+105,25
+98,82
+116,47
+91,122
+63,42
+44,109
+72,96
+47,123
+35,119
+
+formEback
+43,27
+113,32
+117,117
+105,123
+80,98
+108,109
+84,42
+61,123
+33,51
+51,82
+
+
+formFfront
+54,22
+112,37
+111,14
+119,20
+119,80
+100,122
+53,135
+41,120
+91,51
+80,54
+38,99
+30,91
+60,60
+33,60
+36,39
+
+formFback
+30,20
+39,14
+39,38
+94,21
+115,39
+117,59
+91,59
+121,90
+113,97
+71,56
+59,50
+110,120
+98,134
+51,122
+31,81
+
+formGfront
+15,104
+38,82
+57,31
+69,56
+66,23
+92,28
+87,58
+117,38
+127,54
+34,99
+126,106
+135,117
+45,114
+35,128
+
+formGback
+25,52
+36,36
+66,56
+63,26
+86,22
+83,56
+96,30
+114,83
+135,105
+115,128
+105,113
+14,114
+25,104
+114,98
+
+formHfront
+28,26
+33,44
+101,27
+69,51
+49,56
+57,67
+45,74
+51,80
+24,82
+30,118
+52,93
+75,114
+77,104
+82,137
+90,97
+127,112
+119,48
+104,48
+127,18
+84,14
+
+formHback
+27,15
+75,15
+127,29
+119,47
+55,26
+78,49
+102,58
+95,67
+107,77
+101,82
+126,88
+119,122
+99,95
+74,114
+72,104
+64,136
+59,95
+24,111
+34,44
+47,44
