@@ -1,13 +1,21 @@
 ---------------------------------------------------------------
-pilot stimulus parameters
 
 run on ubuntu, otherwise object speed may vary
+
+pilot stimulus parameters:
 
 var temporal_delay = 2; // time between collision and when patient starts to move, set to 2 to have frame_t A stops B stops
 var xvelocity = 2.4; // 1 slow vs 2.4 fast
 var blink_position = render.options.width / (1.5*2); // time to blink in patient object, 4 early vs 1.5 late
 var bounding_box_type = 4; // 1 for coarse box, 2 for semi-coarse, 3 for precise box, 4 for collision with exact position
 
+the agent object:
+
+var pointsA = Vertices.fromPath('96 12 59 18 43 75 101 137 105 82 96 94 93 72 105 40'); // B back
+color = '#'+Math.floor(Math.random()*16777215).toString(16);
+var boxA = makeBox(0, 250, pointsA, 'boxA', color, 0)
+Body.setAngle(boxA, -Math.PI/1.7);
+Tip position xy: boxA.position.x + (473.87-411.35), boxA.position.y + (208.31-250)
 ---------------------------------------------------------------
 
 formAfront 
@@ -19,8 +27,8 @@ formAfront
 104,98
 var boxB = Bodies.fromVertices(render.options.width/2, 230, pointsB);
 Body.setAngle(boxB, -Math.PI);
-type2_margin = (413.7-387.7)/2;
 var spatial_gap = 89 + ((413.7-387.7)/2)*0;
+Agent tip to Patient center of mass: 33.95 (0 unit spatial gap at collision time), 41.66 (1 unit spatial gap at collision), 54.28 (2 units spatial gap), 67.52 (3 units spatial gap)
 
 
 formAback // convex side
@@ -32,8 +40,8 @@ formAback // convex side
 105,81
 var boxB = Bodies.fromVertices(render.options.width/2, 230, pointsB);
 Body.setAngle(boxB, -Math.PI);
-var spatial_gap = 109; 119; 129;
 var spatial_gap = 109 + ((413.7-387.7)/2)*0;
+Agent tip to Patient center of mass: 49.98, 63.06, 72.02, 85.65
 ---------------------------------------------------------------
 
 formBfront // convex side
@@ -47,8 +55,8 @@ formBfront // convex side
 48,43
 var boxB = Bodies.fromVertices(render.options.width/2, 240, pointsB);
 Body.setAngle(boxB, -Math.PI*1.25);
-var spatial_gap = 95; 104; 114;
 var spatial_gap = 95 + ((423.2-411.4)/2)*0; 
+Agent tip to Patient center of mass: 44.22, 47.64, 51.27, 58.99
 
 
 formBback
@@ -62,8 +70,8 @@ formBback
 105,40
 var boxB = Bodies.fromVertices(render.options.width/2, 215, pointsB);
 Body.setAngle(boxB, -Math.PI);
-type2_margin = (423.2-411.4)/3;
 var spatial_gap = 80 + ((423.2-411.4)/2)*0;
+Agent tip to Patient center of mass: 17.95, 22.41, 26.96, 31.56
 ---------------------------------------------------------------
 
 formCfront
@@ -77,8 +85,8 @@ formCfront
 66,24
 var boxB = Bodies.fromVertices(render.options.width/2, 235, pointsB);
 Body.setAngle(boxB, -Math.PI*1.1);
-type2_margin = (418.5-392.4)/2;
 var spatial_gap = 85 + ((418.5-392.4)/2)*0;
+Agent tip to Patient center of mass: 34.20, 40.79, 52.35, 64.95
 
 
 formCback // convex side
@@ -92,8 +100,8 @@ formCback // convex side
 106,112
 var boxB = Bodies.fromVertices(render.options.width/2, 230, pointsB);
 Body.setAngle(boxB, -Math.PI*1);
-var spatial_gap = 89; 99; 109;
 var spatial_gap = 89 + ((418.5-392.4)/2)*0;
+Agent tip to Patient center of mass: 33.95, 41.66, 54.28, 67.52
 ---------------------------------------------------------------
 
 formDfront // convex side
@@ -110,8 +118,8 @@ formDfront // convex side
 115,91
 54,63
 var boxB = Bodies.fromVertices(render.options.width/2, 235, pointsB);
-var spatial_gap = 99; 109; 119;
 var spatial_gap = 99 + ((420.8-387.7)/2)*0;
+Agent tip to Patient center of mass: 44.47, 56.46, 73.68, 87.05
 
 
 
@@ -130,8 +138,8 @@ formDback
 92,64
 var boxB = Bodies.fromVertices(render.options.width/2, 240, pointsB);
 Body.setAngle(boxB, -Math.PI*0.07);
-type2_margin = (420.8-387.7)/2;
 var spatial_gap = 84 + ((420.8-387.7)/2)*0; 
+Agent tip to Patient center of mass: 38.23, 47.64, 63.03, 75.63
 ---------------------------------------------------------------
 
 regular box

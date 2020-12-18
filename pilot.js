@@ -41,7 +41,7 @@ var type2_margin = 23 / 2; // type 2 use only: margin for the semi-coarse boundi
 var xvelocity = 2.4; // 1 slow vs 2.4 fast
 var blink_position = render.options.width / (1.5*2); // time to blink in patient object, 4 early vs 1.5 late
 var bounding_box_type = 4; // 1 for coarse box, 2 for semi-coarse, 3 for precise box, 4 for collision with exact position
-var spatial_gap = 84 + 10*3; // collision spatial gap between two convex shapes
+var spatial_gap = 84 + ((420.8-387.7)/2)*3; // collision spatial gap between two convex shapes
 
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -74,19 +74,20 @@ function makeBox(x, y, points, label, color, xvelocity) {
     )
 }
 
-// var pointsA = Vertices.fromPath('96 12 59 18 43 75 101 137 105 82 96 94 93 72 105 40'); // B back
-var pointsA = Vertices.fromPath('0 0 0 80 80 80 80 0'); // regular box
+// var pointsA = Vertices.fromPath('0 0 0 80 80 80 80 0'); // regular box
+var pointsA = Vertices.fromPath('96 12 59 18 43 75 101 137 105 82 96 94 93 72 105 40'); // B back
 color = '#'+Math.floor(Math.random()*16777215).toString(16);
 
-var boxA = makeBox(0, 250, pointsA, 'boxA', color, 0)
-// Body.setAngle(boxA, -Math.PI/1.7);
+var boxA = makeBox(0, 250, pointsA, 'boxA', color, 0);
+Body.setAngle(boxA, -Math.PI/1.7);
 
 // -------------------------------- box B to be changed
-var pointsB = Vertices.fromPath('0 0 0 80 80 80 80 0'); // regular box
+// var pointsB = Vertices.fromPath('0 0 0 80 80 80 80 0'); // regular box
+var pointsB = Vertices.fromPath('40 28 113 55 113 122 102 106 70 119 41 119 45 110 38 109 49 98 81 85 35 89 92 64'); // D back
 color = '#'+Math.floor(Math.random()*16777215).toString(16);
 
-var boxB = makeBox(render.options.width/2, 250, pointsB, 'boxB', color, xvelocity)
-// Body.setAngle(boxB, -Math.PI);
+var boxB = makeBox(render.options.width/2, 240, pointsB, 'boxB', color, xvelocity);
+Body.setAngle(boxB, -Math.PI*0.07);
 // --------------------------------- end change
 
 
@@ -154,6 +155,8 @@ if (bounding_box_type == 3) {
 // collision detection for type 4 (two convex)
 function type4COllision(){
     if (Astarted==true && boxA.position.x + spatial_gap >= boxB.position.x){ 
+        console.log('center of mass x distance', boxB.position.x - boxA.position.x);
+        console.log('Euclidean A tip to B com', Math.sqrt(Math.pow(boxA.position.x + (473.87-411.35) - boxB.position.x, 2) + Math.pow(boxA.position.y + (208.31-250) - boxB.position.y, 2)));
         stopA();
     }
 }
@@ -184,6 +187,7 @@ var temp_x = Infinity;  // for type2 use only: record collision position of boxA
     if (t==1){
         Body.setVelocity( boxA, {x: xvelocity, y: 0});
         Astarted = true;
+        console.log(boxA);
     }
     // blink in boxB
     if (Bshown==false && boxA.position.x >= blink_position) {
