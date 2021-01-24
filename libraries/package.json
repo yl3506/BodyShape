@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "ccapture.js": "^1.1.0",
+    "hls.js": "^0.14.17"
+  }
+}
