@@ -23,7 +23,7 @@ var render = Render.create({
         wireframes: false,
         showAngleIndicator: false,
         showConvexHulls: false,
-        showCollisions: false,
+        showCollisions: true,
         background: 'black'
     }
 });
@@ -38,7 +38,7 @@ Runner.run(runner, engine);
 var temporal_delay = 2; // time between collision and when patient starts to move, set to 2 to have frame_t A stops B stops
 var type2_margin = 23 / 2; // type 2 use only: margin for the semi-coarse bounding box (between coarse and precise boxes)
 
-var xvelocity = 2.4; // 1 slow vs 2.4 fast
+var xvelocity = 1; // 1 slow vs 2.4 fast
 var blink_position = render.options.width / (1.5*2); // time to blink in patient object, 4 early vs 1.5 late
 var bounding_box_type = 4; // 1 for coarse box, 2 for semi-coarse, 3 for precise box, 4 for collision with exact position
 var spatial_gap = 84 + ((420.8-387.7)/2)*3; // collision spatial gap between two convex shapes
@@ -147,6 +147,7 @@ if (bounding_box_type == 3) {
             if ((pair.bodyA.label == "boxA" && pair.bodyB.label == "boxB") || (pair.bodyA.label == "boxB" && pair.bodyB.label == "boxA")) {
                 stopA();
                 console.log('type 3 x position', boxA.position.x);
+                console.log(pair.collision)
             }
         });
     });
@@ -187,7 +188,7 @@ var temp_x = Infinity;  // for type2 use only: record collision position of boxA
     if (t==1){
         Body.setVelocity( boxA, {x: xvelocity, y: 0});
         Astarted = true;
-        console.log(boxA);
+        // console.log(boxA);
     }
     // blink in boxB
     if (Bshown==false && boxA.position.x >= blink_position) {

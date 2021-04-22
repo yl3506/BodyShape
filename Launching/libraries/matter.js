@@ -9418,6 +9418,7 @@ var Mouse = _dereq_('../core/Mouse');
                 var contact = pair.activeContacts[j],
                     vertex = contact.vertex;
                 c.rect(vertex.x - 1.5, vertex.y - 1.5, 3.5, 3.5);
+                console.log('collision vertex', vertex);
             }
         }
 

@@ -252,7 +252,7 @@ formGfront // convex
 135,117
 45,114
 35,128
-Vertices.fromPath('15 104 38 82 57 31 69 56 66 23 92 28 87 58 117 38 127 54 34 99 126 106 135 117 45 114 35 128'); // G front convex
+Vertices.fromPath('15 104 38 82 57 31 69 56 66 23 92 28 87 58 117 38 127 54 34 99 126 106 135 117 45 114 35 128'); // G front 
 var spatial_gap = 124
 var boxB = makeBox(render.options.width/2, 210, pointsB, 'boxB', color);
 Body.setAngle(boxB, Math.PI*0.2);
@@ -274,7 +274,7 @@ formGback // concave
 25,104
 114,98
 var spatial_gap = 93
-Vertices.fromPath('15 104 38 82 57 31 69 56 66 23 92 28 87 58 117 38 127 54 34 99 126 106 135 117 45 114 35 128'); // G front convex
+var pointsB = Vertices.fromPath('15 104 38 82 57 31 69 56 66 23 92 28 87 58 117 38 127 54 34 99 126 106 135 117 45 114 35 128'); // G front 
 var boxB = makeBox(render.options.width/2, 215, pointsB, 'boxB', color);
 Body.setAngle(boxB, Math.PI*0.95);
 ---------------------------------------------------------------
@@ -305,7 +305,7 @@ var spatial_gap = 115
 var boxB = makeBox(render.options.width/2, 225, pointsB, 'boxB', color);
 Body.setAngle(boxB, -Math.PI*0.5);
 
-formHback
+formHback // concave
 27,15
 75,15
 127,29

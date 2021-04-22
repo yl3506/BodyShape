@@ -1,0 +1,66 @@
+Description for shape_meta.csv
+
+shape: shape of the object (A~H);
+convex:  whether patient-hit-side is convex or concave;
+contour: JavaScript coordinate of the vertices for patient, in format (x1, y1, x2, y2, x3, y3, ...); (in Python, this is (x1, -y1, x2, -y2, ...))
+y: the JS y-coordinate of the patient at initial state (x coordinate is always half length of the canvas (i.e. x=500);
+angle: rotation angle (in radian) needed to apply on the object after being constructed from contour (clockwise in JS, counterclockwise in Python);
+spatial_gap: spatial distance between centers of mass of agent and patient when two shapes collide with 0-spatial-gap.
+
+agent rotation angle: np.pi/1.7
+collision distance (pixel): [0, 4, 8, 12, 16, 20, 25, 32, 45, 64]
+patient initial x coordinate: 500
+agent initial x coordinate: (0, 250)
+
+
+# Final Euclidean shapes
+	{
+		'shape': 'A',
+		'convex': 'concave',
+		'contour': '104 20 42 80 25 125 80 120 118 139 150 117 120 130 100 119 127 117 85 107 104 98',
+		'y': 230,
+		'angle': -np.pi,
+		'spatial_gap': 88
+	}
+  {
+		'shape': 'A',
+		'convex': 'convex',
+		'contour': '41 23 46 102 66 110 23 119 90 123 120 150 160 120 120 140 100 124 127 125 105 81',
+		'y': 230,
+		'angle': -np.pi,
+		'spatial_gap': 107 
+	}
+
+  {
+		'shape': 'E',
+		'convex': 'concave',
+		'contour': '34 33 105 25 98 82 116 47 91 122 63 42 44 109 72 96 52 118 52 180 47 180 47 123 35 119',
+		'y': 215,
+		'angle': -np.pi*1.51,
+		'spatial_gap': 106
+	}
+  {
+		'shape': 'E',
+		'convex': 'convex',
+		'contour': '43 27 108 31 108 -15 113 -15 113 32 117 117 105 123 80 98 108 109 84 42 61 123 33 51 51 82',
+		'y': 230,
+		'angle': -np.pi*0.5,
+		'spatial_gap': 99
+	}
+
+  {
+		'shape': 'F',
+		'convex': 'concave',
+		'contour': '54 22 112 37 111 14 119 20 119 80 100 122 70 130 50 175 -45 175 -45 168 45 168 59 133 53 135 41 120 91 51 80 54 38 99 30 91 60 60 33 60 36 39',
+		'y': 215,
+		'angle': 0,
+		'spatial_gap': 99,
+	}
+  {
+		'shape': 'F',
+		'convex': 'convex',
+		'contour': '30 20 39 14 39 38 94 21 115 39 117 59 91 59 121 90 113 97 71 56 59 50 130 120 98 134 60 127 40 165 -65 165 -65 155 33 155 51 122 31 81',
+		'y': 230,
+		'angle': 0,
+		'spatial_gap': 105,
+	}
