@@ -4,6 +4,9 @@ tar -xvf A_convex_1.tar
 make movie command:
 ffmpeg -r 240 -f image2 -s 1000x400 -i "%07d.png" -vcodec libx264 -crf 0 -pix_fmt yuv420p output.mp4
 
+
+flip videos command:
+for f in *.mp4; do ffmpeg -i "$f" -vf hflip -c:a copy "${f%.*}_flipped.mp4"; done
 ---------------------------------------------------------------
 
 run on ubuntu, otherwise object speed may vary

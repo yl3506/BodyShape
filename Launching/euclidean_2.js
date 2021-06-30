@@ -39,9 +39,9 @@ var blink_position = render.options.width / (4*2); // time to blink in patient o
 
 // ---------------------------------------------------------------------------------------------------------------------
 // stimulus parameters
-var distance_idx = 9; // [0, 4, 5, 6, 7, 8, 9]
-var capturer = new CCapture({ format: 'png', framerate: 60 , name: 'Euclidean_H_convex_'+distance_idx});
-var spatial_gap = 116 + [0, 4, 8, 12, 16, 20, 25, 32, 45, 64][distance_idx]; // collision spatial gap between two convex shapes
+var distance_idx = 9; // [0, 3, 5, 6, 7, 8, 9]
+var capturer = new CCapture({ format: 'png', framerate: 60 , name: 'Euclidean_warmup_'+distance_idx});
+var spatial_gap = 80 + [0, 8, 16, 32, 48, 64, 80, 96, 112, 128][distance_idx]; // collision spatial gap between two convex shapes
 // ---------------------------------------------------------------------------------------------------------------------
 
 // objects
@@ -63,45 +63,52 @@ function makeBox(x, y, points, label, color, xvelocity) {
 }
 
 
-var pointsA = Vertices.fromPath('96 12 59 18 43 75 101 137 105 82 96 94 93 72 105 40'); // B back
 color = randomColor();
-var boxA = makeBox(0, 250, pointsA, 'boxA', color);
-Body.setAngle(boxA, -Math.PI/1.7);
+// var pointsA = Vertices.fromPath('0 200 90 200 0 260'); // B back
+var pointsA = Vertices.fromPath('0 0 0 80 80 80 80 0'); // regular box
+var boxA = makeBox(0, 230, pointsA, 'boxA', color);
 
 // ----------------------------------------------------- box B to be changed
 color = randomColor();
 
-// var pointsB = Vertices.fromPath('104 20 42 80 25 125 80 120 118 139 165 125 120 130 100 119 127 117 85 107 104 98'); // A concave
-// var boxB = makeBox(render.options.width/2, 230, pointsB, 'boxB', color);
-// Body.setAngle(boxB, -Math.PI); // spatial gap = 97
+var pointsB = Vertices.fromPath('0 0 0 80 80 80 80 0'); // regular box
+var boxB = makeBox(render.options.width/2, 230, pointsB, 'boxB', color);
+// spatial gap = 80
 
-// var pointsB = Vertices.fromPath('-60 299 -123 239 -140 194 -85 199 -47 180 0 194 -45 189 -65 200 -38 202 -80 212 -61 221'); // A convex
+// var pointsB = Vertices.fromPath('104 20 23 80 23 127 104 127 200 127 245 120 104 120 85 100 104 80'); // shape 1 concave
+// var boxB = makeBox(render.options.width/2, 220, pointsB, 'boxB', color);
+// Body.setAngle(boxB, -Math.PI); 
+// // spatial gap = 69
+
+// var pointsB = Vertices.fromPath('-104 20 -23 80 -23 127 -104 127 -200 127 -245 120 -104 120 -85 100 -104 80'); // shape 1 concave
 // var boxB = makeBox(render.options.width/2, 225, pointsB, 'boxB', color);
-// // spatial gap = 111
+// Body.setAngle(boxB, -Math.PI); 
+// // spatial gap = 118
 
-// var pointsB = Vertices.fromPath('34 33 105 25 98 82 116 47 91 122 63 42 44 109 72 96 52 118 35 180 28 180 47 123 35 119'); // E concave
-// var boxB = makeBox(render.options.width/2, 215, pointsB, 'boxB', color);
-// Body.setAngle(boxB, -Math.PI*1.51);// spatial gap = 104
+// var pointsB = Vertices.fromPath('84 30 84 104 73 96 75 115 60 82 73 70 50 50 -130 50 -130 58 -145 30'); // shape 2 concave
+// var boxB = makeBox(render.options.width/2, 187, pointsB, 'boxB', color);
+// // spatial gap = -19
 
-// var pointsB = Vertices.fromPath('-143 180 -154 251 -96 246 -132 263 -56 240 -135 210 -68 193 -82 220 -59 201 2 186 3 179 -54 196 -58 184'); // E convex
-// var boxB = makeBox(render.options.width/2, 230, pointsB, 'boxB', color);
-// // spatial gap = 105
+// var pointsB = Vertices.fromPath('-84 30 -84 104 -73 96 -75 115 -60 82 -73 70 -50 50 130 50 130 58 145 30'); // shape 2 convex
+// var boxB = makeBox(render.options.width/2, 187, pointsB, 'boxB', color);
+// // spatial gap = 153
 
-// var pointsB = Vertices.fromPath('54 22 112 37 111 14 119 20 119 80 100 122 70 130 50 185 -45 185 -45 175 45 175 59 133 53 135 41 120 91 51 80 54 38 99 30 91 60 60 33 60 36 39'); // F concave
-// var boxB = makeBox(render.options.width/2, 225, pointsB, 'boxB', color);
-// // spatial gap = 94
+// var pointsB = Vertices.fromPath('70 140 109 140 109 67 40 15 33 50 -80 50 -92 38 -80 60 58 60 85 87 62 122'); // shape 3 concave
+// var boxB = makeBox(render.options.width/2, 200, pointsB, 'boxB', color);
+// // spatial gap = 33
 
-// var pointsB = Vertices.fromPath('-125 156 -183 171 -182 148 -190 154 -190 214 -171 256 -141 264 -121 319 -26 319 -26 309 -116 309 -130 267 -124 269 -112 254 -162 185 -151 188 -109 233 -101 225 -131 194 -104 194 -107 173'); // F convex
-// var boxB = makeBox(render.options.width/2, 250, pointsB, 'boxB', color);
-// // spatial gap = 116
+// var pointsB = Vertices.fromPath('-70 140 -109 140 -109 67 -40 15 -33 50 80 50 92 38 80 60 -58 60 -85 87 -62 122'); // shape 3 convex
+// var boxB = makeBox(render.options.width/2, 190, pointsB, 'boxB', color);
+// // spatial gap = 113
 
-// var pointsB = Vertices.fromPath('27 15 65 15 80 -40 200 -40 200 -33 88 -33 75 15 127 29 119 47 55 26 78 49 102 58 95 67 107 77 101 82 126 88 119 122 99 95 74 114 72 104 64 136 59 95 24 111 34 44 47 44'); // H concave
-// var boxB = makeBox(render.options.width/2, 224, pointsB, 'boxB', color);
-// Body.setAngle(boxB, -Math.PI);// spatial gap = 94
+// var pointsB = Vertices.fromPath('50 65 30 48 -130 48 -115 40 77 40 120 61 120 108 110 115 66 69 66 80 97 115 87 124 66 100 66 127 45 127 30 90'); // shape 4 concave
+// var boxB = makeBox(render.options.width/2, 218, pointsB, 'boxB', color);
+// // spatial gap = 64
 
-var pointsB = Vertices.fromPath('-152 250 -114 250 -98 305 21 305 21 298 -90 298 -104 250 -52 236 -60 218 -124 239 -101 216 -77 207 -84 198 -72 188 -78 183 -53 177 -60 143 -80 170 -105 151 -107 161 -115 129 -120 170 -155 154 -145 221 -132 221'); // H convex
-var boxB = makeBox(render.options.width/2, 240, pointsB, 'boxB', color);
-// spatial gap = 116
+// var pointsB = Vertices.fromPath('-50 65 -30 48 130 48 115 40 -77 40 -120 61 -120 108 -110 115 -66 69 -66 80 -97 115 -87 124 -66 100 -66 127 -45 127 -30 90'); // shape 4 convex
+// var boxB = makeBox(render.options.width/2, 200, pointsB, 'boxB', color);
+// // spatial gap = 128
+
 // ----------------------------------------------------- end of change
 
 
