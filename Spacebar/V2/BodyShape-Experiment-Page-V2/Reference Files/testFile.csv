@@ -1,0 +1,150 @@
+rt,stimulus,trial_type,response,ID
+NULL,NULL,NULL,NULL,NULL
+1.0000,NULL,NULL,NULL,NULL
+1.0000,NULL,NULL,NULL,NULL
+1.0000,NULL,NULL,NULL,NULL
+NULL,NULL,NULL,NULL,NULL
+1.0000,NULL,NULL,NULL,NULL
+NULL,NULL,NULL,NULL,NULL
+1.0000,NULL,NULL,NULL,NULL
+NULL,NULL,NULL,NULL,NULL
+1.0000,NULL,NULL,NULL,NULL
+1.0000,NULL,NULL,NULL,NULL
+NULL,NULL,preload,NULL,NULL
+1.0000,"
+    <p style="text-align:left"><b>LABORATORY",html-button-response,0,NULL
+1.0000,NULL,instructions,NULL,NULL
+1.0000,Array,NewResponse,NULL,NULL
+NULL,NULL,automaticPage,NULL,NULL
+1.0000,Array,NewResponse,NULL,NULL
+NULL,NULL,automaticPage,NULL,NULL
+1.0000,Array,NewResponse,NULL,NULL
+NULL,NULL,automaticPage,NULL,NULL
+1.0000,NULL,survey-text,Array,NULL
+1.0000,"<p><br>Please record the following code for t",paymentPage,0,NULL
+NULL,NULL,preload,NULL,NULL
+1.0000,"
+    <p style="text-align:left"><b>LABORATORY FOR COMPUTATION COGNITION & DEVELOPMENT</b></p>
+    <p style="text-align:left"><b>Department of Psychology</b></p>
+    <p style="text-align:left"><b>Harvard University</b></p>
+    <p><br></p>
+    <p style="text-align:left">Dear Participants,</p>
+    <br>
+    <p style="text-align:left">Thank you for your interest in our study. In this study you will:</p>
+    <p style="text-align:left"><b>* Watch 180 videos of objects colliding. Each video is a few seconds long.</b></p>
+    <p style="text-align:left"><b>* For each video, you will make a simple judgment about the causality of the event.</b></p>
+    <p style="text-align:left"><b>* At the end of the study, we will ask a few simple demographic questions (Optional).</b></p>
+    <p style="text-align:left"><b>* The study is expected to take about 25 minutes.</b></p>
+    <p style="text-align:left;color:red"><b>* The Website Will Automatically Detect Whether Your Browser Can Run the Experiment If You Clicked Consent at the End.</b></p>
+
+    <p style="text-align:left"><br>You are being asked to participate in a project being conducted by a research team at Harvard University, under the direction of Dr. Tomer Ullman. 
+      We are interested in how people are able to reason quickly and in a commonsense way about the different objects and people they encounter in the world around them. A better 
+      understanding of commonsense reasoning has implications for building more intelligent machines that can reason in a more human-like way, lowering risk in different physical 
+      situations. During this study, you will be presented with video events. To assess your understanding of these displays, you will be asked questions and you will respond by 
+      selecting an appropriate response.  
+    <br>
+    <br>The study will last around 25 minutes. Your participation in this study is completely voluntary. You may refuse to participate, or you may choose to withdraw from 
+      participation at any time, without penalty or loss of benefit to which you are otherwise entitled. There has been no harm to people involved in this study and there are 
+      no risks associated with participation.
+    <br>
+    <br>All information collected from the study will be associated with a randomly generated Mechanical Turk code number or Mechanical Turk Worker ID, which is the only identifying
+      data you will be requested to provide. Unless your profile is set to private, MTurk ID’s can be used to link back to user account. We suggest you set your profile to private. 
+      This ID will be changed to Study IDs upon payment. Only researchers associated with this project will have access to the data. In order to make a research transparent to the 
+      scientific and broader community our study design and unidentifiable data are made publicly available on Open Science Framework, a network of research materials and collaboration 
+      software, but your data will not be in anyway identifiable.
+    <br>
+    <br>We will also provide you with a demographic questionnaire. The form does not include any personal identifying information other than your Mechanical Turk Worker ID. Your 
+      contribution to this questionnaire is voluntary; if you choose to provide the requested information, your responses will be confidential. You will be reimbursed at a rate of 
+      $9/hour for your participation. You might be requested to provide you Mechanical Turk ID for reimbursement purposes, but these numbers will be deleted immediately after reimbursement. 
+    <br>
+    <br>Your participation in our study would be greatly appreciated. If you have any questions about the project please feel free to contact us at the Lab for Computation, Cognition, 
+      and Development at the Department of Psychology, 33 Kirkland Street, Cambridge, MA 02138, or via email at cocodev@fas.harvard.edu. You may also contact the faculty member supervising 
+      this work: Tomer Ullman, Assistant Professor of Psychology, 1320 William James Hall, 33 Kirkland Street, Cambridge, MA, 02138, email: tullman@fas.harvard.edu
+    <br>
+    <br>Whom to contact about your rights in this research, for questions, concerns, suggestions, or complaints that are not being addressed by the researcher, or research-related harm:
+     Committee on the Use of Human Subjects in Research at Harvard University. Phone:  617-496-CUHS (2847).  Email: cuhs@harvard.edu. Please print this screen for your records.
+    <br>
+    <br><b>CONSENT STATEMENT:</b>
+    <br>
+    <br>If you agree to participate, please click the "Consent" button below. Thank you very much for your time and consideration.
+    <br>
+    <br><b>By selecting the “Consent” button below, I acknowledge that I am 18 or older, have read this consent form, and I agree to take part in the Commonsense Reasoning about Physics 
+      and Psychology project conducted by the research lab of Dr. Tomer Ullman.
+    <br>
+    <br>If you do NOT agree to participate in this study, please click the "Decline" button below.</b>
+    </p>
+  ",html-button-response,0,NULL
+1.0000,NULL,instructions,NULL,NULL
+1.0000,Array,NewResponse,NULL,NULL
+NULL,NULL,automaticPage,NULL,NULL
+1.0000,Array,NewResponse,NULL,NULL
+NULL,NULL,automaticPage,NULL,NULL
+1.0000,Array,NewResponse,NULL,NULL
+NULL,NULL,automaticPage,NULL,NULL
+1.0000,NULL,survey-text,Array,NULL
+1.0000,"<p><br>Please record the following code for the reimbursement we mentioned in 
+                  the consent form. Thank you for your participation!</p>
+                  ",paymentPage,0,NULL
+NULL,NULL,preload,NULL,NULL
+1686.5950,"
+    <p style="text-align:left"><b>LABORATORY FOR COMPUTATION COGNITION & DEVELOPMENT</b></p>
+    <p style="text-align:left"><b>Department of Psychology</b></p>
+    <p style="text-align:left"><b>Harvard University</b></p>
+    <p><br></p>
+    <p style="text-align:left">Dear Participants,</p>
+    <br>
+    <p style="text-align:left">Thank you for your interest in our study. In this study you will:</p>
+    <p style="text-align:left"><b>* Watch 180 videos of objects colliding. Each video is a few seconds long.</b></p>
+    <p style="text-align:left"><b>* For each video, you will make a simple judgment about the causality of the event.</b></p>
+    <p style="text-align:left"><b>* At the end of the study, we will ask a few simple demographic questions (Optional).</b></p>
+    <p style="text-align:left"><b>* The study is expected to take about 25 minutes.</b></p>
+    <p style="text-align:left;color:red"><b>* The Website Will Automatically Detect Whether Your Browser Can Run the Experiment If You Clicked Consent at the End.</b></p>
+
+    <p style="text-align:left"><br>You are being asked to participate in a project being conducted by a research team at Harvard University, under the direction of Dr. Tomer Ullman. 
+      We are interested in how people are able to reason quickly and in a commonsense way about the different objects and people they encounter in the world around them. A better 
+      understanding of commonsense reasoning has implications for building more intelligent machines that can reason in a more human-like way, lowering risk in different physical 
+      situations. During this study, you will be presented with video events. To assess your understanding of these displays, you will be asked questions and you will respond by 
+      selecting an appropriate response.  
+    <br>
+    <br>The study will last around 25 minutes. Your participation in this study is completely voluntary. You may refuse to participate, or you may choose to withdraw from 
+      participation at any time, without penalty or loss of benefit to which you are otherwise entitled. There has been no harm to people involved in this study and there are 
+      no risks associated with participation.
+    <br>
+    <br>All information collected from the study will be associated with a randomly generated Mechanical Turk code number or Mechanical Turk Worker ID, which is the only identifying
+      data you will be requested to provide. Unless your profile is set to private, MTurk ID’s can be used to link back to user account. We suggest you set your profile to private. 
+      This ID will be changed to Study IDs upon payment. Only researchers associated with this project will have access to the data. In order to make a research transparent to the 
+      scientific and broader community our study design and unidentifiable data are made publicly available on Open Science Framework, a network of research materials and collaboration 
+      software, but your data will not be in anyway identifiable.
+    <br>
+    <br>We will also provide you with a demographic questionnaire. The form does not include any personal identifying information other than your Mechanical Turk Worker ID. Your 
+      contribution to this questionnaire is voluntary; if you choose to provide the requested information, your responses will be confidential. You will be reimbursed at a rate of 
+      $9/hour for your participation. You might be requested to provide you Mechanical Turk ID for reimbursement purposes, but these numbers will be deleted immediately after reimbursement. 
+    <br>
+    <br>Your participation in our study would be greatly appreciated. If you have any questions about the project please feel free to contact us at the Lab for Computation, Cognition, 
+      and Development at the Department of Psychology, 33 Kirkland Street, Cambridge, MA 02138, or via email at cocodev@fas.harvard.edu. You may also contact the faculty member supervising 
+      this work: Tomer Ullman, Assistant Professor of Psychology, 1320 William James Hall, 33 Kirkland Street, Cambridge, MA, 02138, email: tullman@fas.harvard.edu
+    <br>
+    <br>Whom to contact about your rights in this research, for questions, concerns, suggestions, or complaints that are not being addressed by the researcher, or research-related harm:
+     Committee on the Use of Human Subjects in Research at Harvard University. Phone:  617-496-CUHS (2847).  Email: cuhs@harvard.edu. Please print this screen for your records.
+    <br>
+    <br><b>CONSENT STATEMENT:</b>
+    <br>
+    <br>If you agree to participate, please click the "Consent" button below. Thank you very much for your time and consideration.
+    <br>
+    <br><b>By selecting the “Consent” button below, I acknowledge that I am 18 or older, have read this consent form, and I agree to take part in the Commonsense Reasoning about Physics 
+      and Psychology project conducted by the research lab of Dr. Tomer Ullman.
+    <br>
+    <br>If you do NOT agree to participate in this study, please click the "Decline" button below.</b>
+    </p>
+  ",html-button-response,0,NULL
+1193.3500,NULL,instructions,NULL,NULL
+247.4100,Array,NewResponse,NULL,NULL
+NULL,NULL,automaticPage,NULL,NULL
+187.3650,Array,NewResponse,NULL,NULL
+NULL,NULL,automaticPage,NULL,NULL
+165.6550,Array,NewResponse,NULL,NULL
+NULL,NULL,automaticPage,NULL,NULL
+2449.3350,NULL,survey-text,Array,NULL
+751.0900,"<p><br>Please record the following code for the reimbursement we mentioned in 
+                  the consent form. Thank you for your participation!</p>
+                  ",paymentPage,0,NULL
