@@ -1,0 +1,106 @@
+---
+title: "state_rm_2afc_pilot_analysis"
+author: "Tal Boger"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load packages and data:
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+library(pwr)
+library(lmerTest)
+library(plyr)
+
+data <- read.csv('full_data_3b.csv')
+
+length(unique(data$subjectID))
+```
+
+# exclude by accuracy
+
+```{r}
+subject <- data %>%
+  group_by(subjectID, shape) %>%
+  summarise_at(vars(responded_correctly, count), sum)
+
+subject$accuracy <- subject$responded_correctly / subject$count
+
+to.drop <- filter(subject, accuracy < 0.75 & shape == "catch_shape")$subjectID
+length(to.drop)
+
+data <- data[!data$subjectID %in% to.drop,]
+
+
+subject <- data %>%
+  group_by(subjectID) %>%
+  summarise_at(vars(responded_correctly, count), sum)
+
+subject$accuracy <- subject$responded_correctly / subject$count
+
+to.drop <- filter(subject, accuracy < 0.5)$subjectID
+length(to.drop)
+
+data <- data[!data$subjectID %in% to.drop,]
+
+
+subject <- data %>%
+  group_by(subjectID, change_key) %>%
+  summarise_at(vars(responded_correctly, count), sum)
+
+to.drop <- filter(subject, change_key == "p")$subjectID
+
+data <- data[!data$subjectID %in% to.drop,]
+write.csv(data, "excluded_data_exp_3b.csv")
+data <- data[data$shape != "catch_shape",]
+
+length(unique(data$subjectID))
+```
+
+# Difference by body violation
+
+```{r}
+dataChange <- data[data$correctAnswer == "different",]
+
+data.type <- dataChange %>%
+  group_by(subjectID, analysisChangeType) %>%
+  summarise_at(vars(responded_correctly, count), sum)
+
+data.type$accuracy <- data.type$responded_correctly / data.type$count
+library(lsr)
+t.test(filter(data.type, analysisChangeType == "concave")$accuracy, filter(data.type, analysisChangeType == "concave_nofill")$accuracy, paired=T)
+cohensD(filter(data.type, analysisChangeType == "concave")$accuracy, filter(data.type, analysisChangeType == "concave_nofill")$accuracy, method="paired")
+
+t.test(filter(data.type, analysisChangeType == "concave")$accuracy, filter(data.type, analysisChangeType == "convex")$accuracy, paired=T)
+cohensD(filter(data.type, analysisChangeType == "concave")$accuracy, filter(data.type, analysisChangeType == "convex")$accuracy, method="paired")
+
+t.test(filter(data.type, analysisChangeType == "concave_nofill")$accuracy, filter(data.type, analysisChangeType == "convex")$accuracy, paired=T)
+cohensD(filter(data.type, analysisChangeType == "concave_nofill")$accuracy, filter(data.type, analysisChangeType == "convex")$accuracy, method="paired")
+
+
+pairs <- list(c("concave", "concave_nofill"), c("concave_nofill", "convex"), c("concave", "convex"))
+
+p <- ggbarplot(data.type, x = "analysisChangeType", y = "accuracy",
+  add = "mean_ci",
+  position = position_dodge()) +
+  stat_compare_means(method="t.test", paired=TRUE, comparisons=pairs, label="p.signif") +
+  geom_hline(yintercept=0.5, linetype="dashed", alpha=0.5) +
+  ylab("% noticed change") +
+  xlab("Added area type") +
+  scale_x_discrete(labels=c("concave" = "Concave", "concave_nofill" = "Concave no fill", "convex" = "Convex")) +
+  theme_pubr()
+p
+
+ggsave("exp3b_results.svg", p, width=6, height=4, dpi=400)
+data.type <- dataChange %>%
+  group_by(analysisChangeType) %>%
+  summarise_at(vars(responded_correctly, count), sum)
+
+data.type
+```

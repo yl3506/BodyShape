@@ -1,0 +1,165 @@
+---
+title: "state_rm_2afc_pilot_analysis"
+author: "Tal Boger"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load packages and data:
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+library(pwr)
+library(lmerTest)
+library(plyr)
+
+data <- read.csv('full_data_3a.csv')
+
+length(unique(data$subjectID))
+```
+
+# exclude by accuracy
+
+```{r}
+subject <- data %>%
+  group_by(subjectID, shape) %>%
+  summarise_at(vars(responded_correctly, count), sum)
+
+subject$accuracy <- subject$responded_correctly / subject$count
+
+to.drop <- filter(subject, accuracy < 0.75 & shape == "catch_shape")$subjectID
+length(to.drop)
+
+
+subject <- data %>%
+  group_by(subjectID) %>%
+  summarise_at(vars(responded_correctly, count), sum)
+
+subject$accuracy <- subject$responded_correctly / subject$count
+
+to.drop <- filter(subject, accuracy < 0.5)$subjectID
+length(to.drop)
+
+
+subject <- data %>%
+  group_by(subjectID, change_key) %>%
+  summarise_at(vars(responded_correctly, count), sum)
+
+to.drop <- filter(subject, change_key == "p")$subjectID
+
+data <- data[!data$subjectID %in% to.drop,]
+write.csv(data, "excluded_data_exp_3a.csv")
+data <- data[data$shape != "catch_shape",]
+
+length(unique(data$subjectID))
+
+mean(data$totalTime)
+
+tmp <- ddply(data, .(subjectID, fullShapeName), summarise,
+             responded_correctly = sum(responded_correctly) / sum(count))
+
+
+data.change <- ddply(data, .(fullShapeName), summarise,
+                   mean = mean(responded_correctly),
+                   std = sd(responded_correctly),
+                   n = length(responded_correctly),
+                   se = std / sqrt(n),
+                   ci = 1.96*se)
+```
+
+# Difference by body violation
+
+```{r}
+dataChange <- data[data$correctAnswer == "different",]
+
+data.type <- dataChange %>%
+  group_by(subjectID, analysisChangeType) %>%
+  summarise_at(vars(responded_correctly, count), sum)
+
+data.type$accuracy <- data.type$responded_correctly / data.type$count
+
+t.test(filter(data.type, analysisChangeType == "concave_nofill")$accuracy, filter(data.type, analysisChangeType == "concave")$accuracy, paired=T)
+library(lsr)
+cohensD(filter(data.type, analysisChangeType == "concave_nofill")$accuracy, filter(data.type, analysisChangeType == "concave")$accuracy, method="paired")
+
+
+t.test(filter(data.type, analysisChangeType == "convex")$accuracy, filter(data.type, analysisChangeType == "concave")$accuracy, paired=T)
+cohensD(filter(data.type, analysisChangeType == "convex")$accuracy, filter(data.type, analysisChangeType == "concave")$accuracy, method="paired")
+
+t.test(filter(data.type, analysisChangeType == "concave_nofill")$accuracy, filter(data.type, analysisChangeType == "convex")$accuracy, paired=T)
+cohensD(filter(data.type, analysisChangeType == "concave_nofill")$accuracy, filter(data.type, analysisChangeType == "convex")$accuracy, method="paired")
+
+pairs <- list(c("concave", "concave_nofill"), c("concave_nofill", "convex"), c("concave", "convex"))
+
+p <- ggbarplot(data.type, x = "analysisChangeType", y = "accuracy",
+  add = "mean_ci",
+  position = position_dodge()) +
+  stat_compare_means(method="t.test", paired=TRUE, comparisons=pairs, label="p.signif") +
+  geom_hline(yintercept=0.5, linetype="dashed", alpha=0.5) +
+  ylab("% noticed change") +
+  xlab("Added area type") +
+  scale_x_discrete(labels=c("concave" = "Concave", "concave_nofill" = "Concave no fill", "convex" = "Convex")) +
+  theme_pubr()
+
+
+ggsave("exp3a_results.svg", p, width=6, height=4, dpi=400)
+
+
+
+data.type <- dataChange %>%
+  group_by(analysisChangeType) %>%
+  summarise_at(vars(responded_correctly, count), sum)
+
+data.type
+```
+
+# Difference by change type
+
+```{r}
+tmp <- ddply(dataChange, .(subjectID, changeType), summarise,
+             responded_correctly = sum(responded_correctly) / sum(count))
+
+
+data.change <- ddply(tmp, .(changeType), summarise,
+                   mean = mean(responded_correctly),
+                   std = sd(responded_correctly),
+                   n = length(responded_correctly),
+                   se = std / sqrt(n),
+                   ci = 1.96*se)
+
+ggplot(data.change, aes(y = changeType, x = mean)) +
+  geom_bar(stat='identity', position='dodge', fill='lightblue') +
+  geom_errorbar(aes(xmin = mean - ci, xmax = mean + ci), width = 0.2, position = position_dodge(0.9)) +
+  geom_vline(xintercept=0.5) +
+  ylab("Change type") +
+  xlab("Accuracy") +
+  theme_pubr()
+```
+
+# Difference by Shape
+
+```{r}
+tmp <- ddply(dataChange, .(subjectID, shape), summarise,
+             responded_correctly = sum(responded_correctly) / sum(count))
+
+data.change <- ddply(tmp, .(shape), summarise,
+                   mean = mean(responded_correctly),
+                   std = sd(responded_correctly),
+                   n = length(responded_correctly),
+                   se = std / sqrt(n),
+                   ci = 1.96*se)
+
+ggplot(data.change, aes(y = shape, x = mean)) +
+  geom_bar(stat='identity', position='dodge', fill='lightblue') +
+  geom_errorbar(aes(xmin = mean - ci, xmax = mean + ci), width = 0.2, position = position_dodge(0.9)) +
+  geom_vline(xintercept=0.5) +
+  ylab("Shape") +
+  xlab("Accuracy") +
+  theme_pubr()
+```
+

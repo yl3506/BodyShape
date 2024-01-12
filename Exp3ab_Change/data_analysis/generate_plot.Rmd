@@ -1,0 +1,113 @@
+---
+title: "state_rm_2afc_pilot_analysis"
+author: "Tal Boger"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load packages and data:
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+library(pwr)
+library(lmerTest)
+library(plyr)
+
+data_3a <- read.csv('full_data_3a.csv')
+data_3b <- read.csv('full_data_3b.csv')
+```
+
+# exclude by accuracy
+
+```{r}
+subset_and_clean_data <- function(data) {
+  
+
+  subject <- data %>%
+    group_by(subjectID, shape) %>%
+    summarise_at(vars(responded_correctly, count), sum)
+  
+  subject$accuracy <- subject$responded_correctly / subject$count
+  
+  to.drop <- filter(subject, accuracy < 0.75 & shape == "catch_shape")$subjectID
+  length(to.drop)
+  
+  data <- data[!data$subjectID %in% to.drop,]
+  
+  subject <- data %>%
+    group_by(subjectID) %>%
+    summarise_at(vars(responded_correctly, count), sum)
+  
+  subject$accuracy <- subject$responded_correctly / subject$count
+  
+  to.drop <- filter(subject, accuracy < 0.5)$subjectID
+  length(to.drop)
+  
+  data <- data[!data$subjectID %in% to.drop,]
+  
+  
+  subject <- data %>%
+    group_by(subjectID, change_key) %>%
+    summarise_at(vars(responded_correctly, count), sum)
+  
+  to.drop <- filter(subject, change_key == "p")$subjectID
+  
+  data <- data[!data$subjectID %in% to.drop,]
+  data <- data[data$shape != "catch_shape",]
+  
+  dataChange <- data[data$correctAnswer == "different",]
+  
+  data.type <- dataChange %>%
+    group_by(subjectID, analysisChangeType) %>%
+    summarise_at(vars(responded_correctly, count), sum)
+  
+  data.type$accuracy <- data.type$responded_correctly / data.type$count
+  return(data.type)
+}
+```
+
+# chisq test
+
+```{r}
+data <- read.csv("chisq_data.csv")
+
+data
+chisq.test(data[,c(2,3,4)])
+```
+
+
+# grouped graph
+
+```{r}
+data3a_cleaned <- subset_and_clean_data(data_3a)
+data3a_cleaned$task <- "Physical reasoning"
+
+data3b_cleaned <- subset_and_clean_data(data_3b)
+data3b_cleaned$task <- "Control"
+
+data.merge <- rbind(data3b_cleaned, data3a_cleaned)
+data.merge$task <- factor(data.merge$task, levels=c("Physical reasoning", "Control"))
+
+library(ggpattern)
+
+p <- ggbarplot(data.merge, x = "analysisChangeType", y = "accuracy", fill="task",
+  add = "mean_ci",
+  position = position_dodge()) +
+  geom_hline(yintercept=0.5, linetype="dashed", alpha=0.5) +
+  ylab("% noticed change") +
+  xlab("Added area type") +
+  scale_x_discrete(labels=c("concave" = "Concave", "concave_nofill" = "Concave no fill", "convex" = "Convex")) +
+  ylim(0, 1) +  
+  scale_fill_discrete(name="", labels=c("Physical reasoning  ", "Control")) +
+  theme_pubr() +
+  scale_y_continuous(expand = c(0, 0))
+
+p
+#ggsave("exp3_full_results.svg", p, width=6, height=4, dpi=400)
+```
+
