@@ -1,0 +1,942 @@
+<!-- Original script created by Tal Boger, May 2021 -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<div id="consentForm">
+  <p id="title"><strong>CONSENT FORM</strong></p>
+  <span id="consentInstructions">
+  <p><strong>LABORATORY FOR COMPUTATION COGNITION & DEVELOPMENT</strong></p>
+  <p><strong>Department of Psychology</strong></p>
+  <p><strong>Harvard University</strong></p>
+
+  <p>Dear participants,</p>
+  <p>Thank you for your interest in our study. In this study, you will:</p>
+  
+  <ul>
+    <li>See 60 images of objects. Each trial consists of an image with two objects.</li>
+    <li>For each image, you will make a simple judgment about the objects in the images.</li>
+    <li>At the end of the study, you will answer a few simple demographic questions.</li>
+  </ul>
+  <p>The study is expected to take about 10 minutes in total.</p>
+  <p>You are being asked to participate in a project being conducted by a research team at Harvard University, under the direction of Dr. Tomer Ullman.
+     We are interested in how people are able to reason quickly and in a commonsense way about the different objects and people they encounter in the world around them.
+     A better understanding of commonsense reasoning has implications for building more intelligent machines that can reason in a more human-like way, lowering risk in different physical situations.
+     During this study, you will be presented with images. To assess your understanding of these displays, you will be asked questions and you will respond by selecting an appropriate response.</p>
+
+  <p>The study will last around 10 minutes. Your participation in this study is completely voluntary.
+     You may refuse to participate, or you may choose to withdraw from participation at any time, without penalty or loss of benefit to which you are otherwise entitled.
+     There has been no harm to people involved in this study and there are no risks associated with participation.</p>
+
+  <p>All information collected from the study will be associated with a Prolific Subject ID, which is the only identifying data you are providing.
+     Only researchers associated with this project will have access to the data.
+     In order to make a research transparent to the scientific and broader community our study design and unidentifiable data are made publicly available on Open Science Framework, a network of research materials and collaboration software, but your data will not be in anyway identifiable.</p>
+
+  <p>We will also provide you with a demographic questionnaire. The form does not include any personal identifying information other than your Prolific Subject ID.
+     Your contribution to this questionnaire is voluntary; if you choose to provide the requested information, your responses will be confidential. You will be reimbursed at a rate of $12/hour for your participation.</p>
+
+  <p>Your participation in our study would be greatly appreciated.
+    If you have any questions about the project please feel free to contact us at the Lab for Computation, Cognition, and Development at the Department of Psychology, 33 Kirkland Street, Cambridge, MA 02138, or via email at cocodev@g.harvard.edu.
+    You may also contact the faculty member supervising this work: Tomer Ullman, Assistant Professor of Psychology, 1320 William James Hall, 33 Kirkland Street, Cambridge, MA, 02138, email: tullman@fas.harvard.edu</p>
+
+  <p>Whom to contact about your rights in this research, for questions, concerns, suggestions, or complaints that are not being addressed by the researcher, or research-related harm:
+    Committee on the Use of Human Subjects in Research at Harvard University. Phone: 617-496-CUHS (2847). Email: cuhs@harvard.edu. Please print this screen for your records.</p>
+
+  <p><strong>CONSENT STATEMENT:</strong></p>
+
+  <p>If you agree to participate, please click the "Consent" button below. Thank you very much for your time and consideration.</p>
+
+  <p>By selecting the "Consent" button below, I acknowledge that I am 18 or older, have read this consent form, and I agree to take part in the Commonsense Reasoning about Physics and Psychology project conducted by the research lab of Dr. Tomer Ullman. (Your browser will enter full-screen mode after you consent.)</p>
+
+  <p>If you do NOT agree to participate in this study, please click the "Decline" button below.</p>
+
+  <input type="radio" name="consent_key" value="consent" onclick = "checkConsent()" style="display: inline-block;vertical-align: baseline;"> Consent</input>
+  &nbsp; &nbsp;
+  <input type="radio" name="consent_key" value="decline" onclick = "checkConsent()" style="display: inline-block;vertical-align: baseline;"> Decline</input>
+
+  <br>
+  <p id="consent_accepted">Thank you for giving your consent. Press the button below to proceed.</p>
+  <p id="consent_declined">You have declined consent. You may close the experiment.</p>
+  <br>
+
+  <a href='javascript:consentButton()' id='consentButton'>Proceed</a>
+  </span>
+
+  <br>
+  <br>
+</div>
+
+<div id="experiment">
+  <p id="title"><strong>Change Detection</strong></p>
+  <p id="browserCompat"><strong>Unfortunately, this study does not work in your current browser. Please use Chrome, Firefox, or Safari. Sorry!</strong></p>
+ 	<span id="instructions">
+    <p>In this experiment, you will see 60 images, each containing two objects.</p>
+    <p>Each image will only show for a few seconds, and then it will disappear.</p>
+  </span>
+  <span id="startInstructions">
+    <p><strong>Your task</strong> is to determine whether the two objects are the same or different.</p>
+    <p>If you think the two objects are <strong>the same, press the "Q" key</strong>.</p>
+    <p>If you think the two objects are <strong>different, press the "P" key</strong>.</p>
+    <p>By "same", we mean the object on the left <strong>exactly</strong> looks identical to the one on the right! <strong>A difference between two objects can be very tiny</strong>.</p>
+    <p><strong>Important: In the experiment, the images disappear quickly! Each image will only show for 4 seconds and then it will disappear. You will only be able to answer the trial during the 4-second window when the image is still present, otherwise the trial will time out and it will automatically proceed to the next trial.</strong> Please try your best to stay focused and pay close attention to every image. </p>
+    <p>At the end of the study, we will ask for some optional demographic information.</p>
+    <p style="font-size:10pt">(NOTE: When the experiment is done, a submit button should appear. To complete the study, please click that button.)</p>
+    <br>
+    <br>
+    <a href='javascript:runTest()' id='runTest'>Proceed</a>
+  </span>
+
+  <div id="testInstructions">
+    <p>First, you will see two example trials to help you understand the task. In each example, the image will stay on screen the whole time. <strong>However, in the real study, the image will quickly disappear after 4 seconds, and you will only be able to answer the trial within that 4-second window, so pay attention!</strong></p>
+    <p>Once you have correctly responded to the examples, you can start the actual study.</p> 
+    <p>To see the image, press the "enter" key on your keyboard. Please note that a difference between two objects can be <strong>very tiny</strong></p>
+  </div>
+
+  <div id="testTrial">
+    <p style="text-align:center; position:absolute; left:25%; transform:translatex(-25%);">If objects are the <strong>SAME</strong>:<br>press <strong>"Q"</strong>.</p>
+    <p style="text-align:center; position:absolute; left:75%; transform:translatex(-75%);">If objects are <strong>DIFFERENT</strong>:<br>press <strong>"P"</strong>.</p>
+    <div class="container" id="container_img_test" style="position: absolute; left: 50%; top:150px;  transform: translate(-50%, 150px);">
+      <img id="test_img_init" width=1000 height=400 src="stimuli/shape8_concave_area1.png">
+    </div>
+    <div class="container" id="container_img_test2" style="position: absolute; left: 50%; top:150px;  transform: translate(-50%, 150px);">
+      <img id="test_img_init2" width=1000 height=400 src="stimuli/shape3_no_change6.png">
+    </div>
+    <p style="text-align:center" id="incorrect">Unfortunately, your response is incorrect. Please try again.</p>
+    <p style="text-align:center" id="correctTestAnswer0">Correct! Now let's try another example!</p>
+  </div>
+
+  <br>
+
+  <div id="correctTestAnswer">
+    <p style="text-align:center">Correct! Press the button below to start the real experiment!</p>
+    <a href='javascript:StartExperiment()' id='startExperiment'>Start Experiment</a>
+  </div>
+
+  <div id="progressContainer">
+    <div class="progress" id="progressText">Study Progress</div>
+      <div class="progress" id="progressOutline">
+      <div class="progress" id="progressBar"></div>
+    </div>
+  </div>
+  <div id="trialInstructions">
+    <p style="text-align:center">Press the "enter" key on your keyboard to show the images when you're ready.</p>
+  </div>
+  <div id="responseInstructions">
+    <p style="text-align:center; position:absolute; left:25%; transform:translatex(-25%);">If objects are the <strong>SAME</strong>:<br>press <strong>"Q"</strong>.</p>
+    <p style="text-align:center; position:absolute; left:75%; transform:translatex(-75%);">If objects are <strong>DIFFFERENT</strong>:<br>press <strong>"P"</strong>.</p>
+  </div>
+  <div id="responseTimedOut">
+    <p style="text-align:center">Time Out!</p>
+  </div>
+  <div id="loadingNextTrial">
+    <p style="text-align:center">Loading the Next Trial...</p>
+  </div>
+  <div class="container" id="container_img_real" style="position: absolute; left: 50%; top:150px;  transform: translate(-50%, 150px);">
+    <img id="img_init" width=1000 height=400>
+  </div>
+
+</div>
+
+<div id="questionText">
+  <strong>Please answer the following questions.</strong>
+  <p style="text-align:center">In this task, which key were you supposed to press if the two objects are the <strong>same</strong>?</p>
+  <input type="radio" name="change_key" value="p" onclick = "checkDemoAnswers()" style="display: inline-block;vertical-align: baseline;"> P</input>
+  &nbsp; &nbsp;
+  <input type="radio" name="change_key" value="q" onclick = "checkDemoAnswers()" style="display: inline-block;vertical-align: baseline;"> Q</input>
+  <br>
+  <p style="text-align:center">Please describe the task you had to complete in this study</p>
+  <textarea id="taskGuess" rows=4 cols=40 placeholder="Enter your amswer here..."></textarea>
+	<input type="hidden" id="taskGuess" name="taskGuess">
+  <br>
+  <p style="text-align:center">If you had to guess, what do you think was the purpose of this study?</p>
+  <textarea id="purposeGuess" rows=4 cols=40 placeholder="Enter your answer here..."></textarea>
+	<input type="hidden" id="purposeGuess" name="purposeGuess">
+  <br>
+  <p style="text-align:center">What is 1 + 2?</p>
+  <textarea id="sumCheck" rows=1 cols=20 placeholder="Enter your answer here..."></textarea>
+  <br>
+  <br>
+  <a href='javascript:doneExperiment()' id='doneExperiment' class='button'>Next</a>
+</div>
+
+<div id="doneText">
+	<strong>This is the last page of the study. Do not close your browser! You will be able to submit your results and be redirected to Prolific at the end of this page.</strong>
+  <p style="text-align:center">The following is a voluntary questionnaire.
+     You can choose to answer any, all, or none of the questions below.
+     Your participation in the research study does not depend on filling out any of the data below.
+     The form does not include any personal identifying information and is given to you so that we can assess the representativeness of the population of people in our studies.</p>
+	<br>
+  <p style="text-align:center">Please provide your age (in years):</p>
+  <textarea id="ageBox" rows=1 cols=20 placeholder="Enter your age here..."></textarea>
+  <br>
+  <p style="text-align:center">Please indicate your gender:</p>
+  <label for="gender"></label>
+  <select name="gender" id="gender">
+    <option disabled selected value> -- select an option -- </option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+    <option value="no_answer">Prefer not to answer</option>
+  </select>
+  <br>
+  <p>You can also feel free to leave any comments below about how the experiment went, but that's up to you. Did everything seem to work OK?</p>
+	<textarea id="commentBox" rows=4 cols=40 placeholder="Enter your comments here..."></textarea>
+	<input type="hidden" id="comments" name="comments">
+  <br>
+  <br>
+  <br>
+  <a href='javascript:submitData("../data")' id='submitDataButton' class='button'>Submit results</a>
+  <br>
+  <span id="redirectToProlific">
+    <p>Your browser should automatically redirect you to Prolific's webpage where you will be given a completion code.</p>
+    <p>Redirecting in <span id = countDown><b></b></span> seconds.</p>
+    <p>If you're not automatically redirected in a few seconds, please copy and paste this address on your web browser:
+    <b><span id = urlProlific></span></b></p>
+  </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+$(document).ready(introRoutines);
+
+// hide all things aside from instructions
+$('#consent_accepted').hide();
+$('#consent_declined').hide();
+$('#consentButton').hide();
+$('#experiment').hide();
+$('#testTrial').hide();
+$('#incorrect').hide();
+$('#correctTestAnswer').hide();
+$('#correctTestAnswer0').hide();
+$('#container_img_test').hide();
+$('#container_img_test2').hide();
+$('#test_img_init').hide();
+$('#test_img_init2').hide();
+$('#container_img_real').hide();
+$('#img_init').hide();
+$('#img_out').hide();
+$('#testInstructions').hide();
+$('#trialInstructions').hide();
+$('#responseInstructions').hide();
+$('#responseTimedOut').hide();
+$('#loadingNextTrial').hide();
+$('#redirectToProlific').hide();
+
+var requestAnimationFrame = window.requestAnimationFrame ||
+                            window.mozRequestAnimationFrame ||
+                            window.webkitRequestAnimationFrame ||
+                            window.msRequestAnimationFrame;
+
+// experiment params
+var experimentName = 'ducktruck';
+var experimentVersion = 'control';
+
+// timing params
+var stimTime = 4000; // images appear for 1000ms
+var itiTime = 4000; // between trials for loading
+
+// various global vars
+var currentTrialNum;
+var trial;
+var subjectID, studyID, sessionID;
+var responses = {};
+var startHITTime;
+var startExperimentTime;
+var t0_respond;
+var timeOutVar;
+var trialTimeOut=false;
+var answeredCatch = false;
+var answeredSum = false;
+var answeredTask = false;
+var answeredPurpose = false;
+
+// list of shapes
+var shapes = [
+  "shape1",
+  "shape2",
+  // "shape3",
+  // "shape4",
+  "shape5",
+  // "shape6",
+  "shape7",
+  // "shape8",
+  "catch_shape",
+];
+
+// define blocks
+var nBlocks = 12;
+var nTrialsPerBlock = shapes.length;
+var nTrials = nBlocks * nTrialsPerBlock;
+
+// object for all images for preloading
+var allImages = {};
+
+// object of all area changes and shapes
+var area_changes = {'shape1': ["no_change1", "no_change2", "no_change3",
+                               "no_change4", "no_change5", "no_change6",
+                               "concave_area1", "concave_area2", "concave_nofill_area1",
+                               "convex_area1", "convex_area2", "concave_nofill_area2"],
+                    'shape2': ["no_change1", "no_change2", "no_change3",
+                               "no_change4", "no_change5", "no_change6",
+                               "concave_area1", "concave_area2", "concave_nofill_area1",
+                               "convex_area1", "convex_area2", "concave_nofill_area2"],
+                    // 'shape3': ["no_change1", "no_change2", "no_change3",
+                    //            "no_change4", "no_change5", "no_change6",
+                    //            "concave_area1", "concave_area2", "concave_nofill_area1",
+                    //            "convex_area1", "convex_area2", "concave_nofill_area2"],
+                    // 'shape4': ["no_change1", "no_change2", "no_change3",
+                    //            "no_change4", "no_change5", "no_change6",
+                    //            "concave_area1", "concave_area2", "concave_nofill_area1",
+                    //            "convex_area1", "convex_area2", "concave_nofill_area2"],
+                    'shape5': ["no_change1", "no_change2", "no_change3",
+                               "no_change4", "no_change5", "no_change6",
+                               "concave_area1", "concave_area2", "concave_nofill_area1",
+                               "convex_area1", "convex_area2", "concave_nofill_area2"],
+                    // 'shape6': ["no_change1", "no_change2", "no_change3",
+                    //            "no_change4", "no_change5", "no_change6",
+                    //            "concave_area1", "concave_area2", "concave_nofill_area1",
+                    //            "convex_area1", "convex_area2", "concave_nofill_area2"],
+                    'shape7': ["no_change1", "no_change2", "no_change3",
+                               "no_change4", "no_change5", "no_change6",
+                               "concave_area1", "concave_area2", "concave_nofill_area1",
+                               "convex_area1", "convex_area2", "concave_nofill_area2"],
+                    // 'shape8': ["no_change1", "no_change2", "no_change3",
+                    //            "no_change4", "no_change5", "no_change6",
+                    //            "concave_area1", "concave_area2", "concave_nofill_area1",
+                    //            "convex_area1", "convex_area2", "concave_nofill_area2"],
+                    'catch_shape': ["no_change1", "no_change2", "no_change3",
+                                    "no_change4", "no_change5", "no_change6",
+                                    "change1", "change2", "change3",
+                                    "change4", "change5", "change6"]
+                  };
+
+var area_keys = Object.keys(area_changes);
+for (var i = 0; i < area_keys.length; i++) {
+  area_changes[area_keys[i]] = shuffle(area_changes[area_keys[i]]);
+}
+
+// get browser params, tell user browser is not compatible if needed
+var browserInfo = getBrowser();
+if (browserInfo['name'] == "msie" || browserInfo['name'] == "Opera") {
+  $('#browserCompat').show();
+} else {
+  $('#browserCompat').hide();
+}
+
+// redirect params
+var urlProlific = "https://app.prolific.co/submissions/complete?cc=CLBC4B9O";
+$("#urlProlific").html(urlProlific);
+var finalCountDownClock = 5;
+
+function checkConsent() {
+  if (document.querySelector('input[name="consent_key"]:checked').value == "consent") {
+    $('#consent_declined').hide();
+    $('#consent_accepted').show();
+    $('#consentButton').show();
+  } else if (document.querySelector('input[name="consent_key"]:checked').value == "decline") {
+    $('#consent_declined').show();
+    $('#consent_accepted').hide();
+    $('#consentButton').hide();
+  }
+}
+
+function consentButton() {
+  $('#consentForm').hide();
+  $('#experiment').show();
+  var elem = document.documentElement;
+  // enter full screen mode if consent
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+// functions for test trial before experiment begins
+function runTest() {
+  $('#startInstructions').hide();
+  $('#instructions').hide();
+  $('#testInstructions').show();
+  document.onkeydown = function(e) {
+    if(e.keyCode == 13) {
+      showTest();
+    }
+  };
+}
+
+function showTest() {
+  $('#testTrial').show();
+  $('#container_img_test').show();
+  $('#test_img_init').show();
+  document.onkeydown = function(e) {
+    if(e.keyCode == 80) {
+      // $('#testTrial').hide();
+      // $('#correctTestAnswer').show();
+      $('#correctTestAnswer0').show();
+      $('#correctTestAnswer0').delay(3000).hide(0);
+      $('#incorrect').hide();
+      showTest2();
+    } else if (e.keyCode == 81) {
+      $('#incorrect').show();
+    }
+  };
+}
+
+function showTest2() {
+  $('#testTrial').show();
+  $('#container_img_test').hide();
+  $('#container_img_test2').show();
+  $('#test_img_init').hide();
+  $('#test_img_init2').show();
+  document.onkeydown = function(e) {
+    if(e.keyCode == 81) {
+      $('#testTrial').hide();
+      $('#correctTestAnswer').show();
+      $('#incorrect').hide();
+    } else if (e.keyCode == 80) {
+      $('#incorrect').show();
+    }
+  };
+}
+
+// when the document has loaded
+function introRoutines() {
+  [subjectID, studyID, sessionID] = getProlificInfo();
+  currentTrialNum = -1;
+  checkIfTimeOutTrial = 0;
+
+  // gen trials
+  trials = generateTrials();
+  responses['trialData'] = [];
+
+  startHITTime = currentTime();
+
+  preLoadFrames(0)
+}
+
+function getProlificInfo() {
+  let urlParams = new URLSearchParams(window.location.search);
+  prolificPID = urlParams.get("PROLIFIC_PID");
+  studyID = urlParams.get("STUDY_ID");
+  sessionID = urlParams.get("SESSION_ID");
+  return [prolificPID, studyID, sessionID]
+}
+
+
+function generateTrials() {
+  var blocks = getBlockNum();
+  var trial_blocks = getTrialBlocks();
+  trials = [];
+  for (i = 0; i < blocks.length; i++) {
+    var trial = {};
+    trial.shape = trial_blocks[i][0];
+    trial.changeType = trial_blocks[i][1];
+    trial.blockNum = blocks[i];
+    trials.push(trial);
+  }
+  return trials;
+}
+
+function StartExperiment() {
+  $('#correctTestAnswer').hide();
+  $('#testTrial').hide();
+  $('#testInstructions').hide();
+  startedExperiment = true;
+  startExperimentTime = new Date();
+  $('#progressContainer').show();
+  $('.progress').show();
+
+  loadTrial();
+
+}
+
+function loadTrial() {
+  $('#responseTimedOut').hide()
+  $('#loadingNextTrial').hide()
+  currentTrialNum++;
+  if (currentTrialNum < nTrials) {
+    trial = trials[currentTrialNum];
+    trial['trialID'] = currentTrialNum;
+    runTrial();
+  } else {
+    showQuestion();
+  }
+}
+
+function runTrial() {
+  $('#progressBar').css('width',((currentTrialNum/nTrials)*100) + 'px');
+  $('#trialInstructions').show();
+  document.onkeydown = function(e) {
+    if(e.keyCode == 13) {
+      showImages();
+    }
+  };
+}
+
+function showImages() {
+  var currName = trial.shape + "_" + trial.changeType;
+  $('#container_img_real').show();
+  $('#img_init').attr("src", allImages[currName].src);
+  
+  requestResponse();
+  $('#img_init').show();
+  $('#img_init').delay(stimTime).hide(0);
+  timeOutVar = setTimeout(respondTimeOut, stimTime);
+}
+
+var fired=false;
+function requestResponse() {
+  $('#trialInstructions').hide();
+  $('#responseInstructions').show();
+
+  if (trial['trialID'] < nTrials - 1) {
+    preLoadFrames(trial['trialID'] + 1); // preload next trial into allImages
+  }
+
+  t0_respond = currentTime();
+  fired = false;
+  document.onkeydown = function(e) {
+    if (!fired) {
+        if (e.keyCode == 80) {
+            fired = true;
+            trial['response'] = 'different';
+            $('#img_init').hide();
+            respond();
+        } else if (e.keyCode == 81) {
+            fired = true;
+            trial['response'] = 'same';
+            $('#img_init').hide();
+            respond();
+        }
+    }
+  };
+}
+
+
+function respondTimeOut(){ // check if time out
+  $('#responseTimedOut').show();
+  $('#loadingNextTrial').show();
+  trial['response'] = 'timeout';
+  respond();
+  fired=true;
+}
+
+
+function respond() { //respond received
+  clearTimeout(timeOutVar);
+  $('#responseInstructions').hide();
+  $('#loadingNextTrial').show();
+  var rt = currentTime() - t0_respond;
+
+  trial['rt'] = Math.round(rt * 10) / 10;
+  trial['subjectID'] = subjectID;
+  responses['trialData'].push(trial);
+
+  setTimeout(loadTrial, itiTime);
+}
+
+function checkDemoAnswers() {
+  if($('input[type=radio]:checked').length == 2) {
+    answeredCatch = true;
+  }
+  if(answeredCatch == true && answeredSum == true && answeredTask == true && answeredPurpose == true) {
+    $('#doneExperiment').show();
+  }
+}
+
+function showQuestion() { // catch questions
+  $('#experiment').hide();
+  $('#doneExperiment').hide();
+  $('#questionText').show();
+
+  document.getElementById('sumCheck').addEventListener('input', function() {
+    var text = this.value;
+    if (text == 3) {
+        answeredSum = true;
+    }
+    if(answeredCatch == true && answeredSum == true && answeredTask == true && answeredPurpose == true) {
+      $('#doneExperiment').show();
+    }
+  });
+
+  document.getElementById('purposeGuess').addEventListener('input', function() {
+    var text = this.value;
+    if (text.length >= 1) {
+      answeredPurpose = true;
+    }
+    if(answeredCatch == true && answeredSum == true && answeredTask == true && answeredPurpose == true) {
+      $('#doneExperiment').show();
+    }
+  });
+
+  document.getElementById('taskGuess').addEventListener('input', function() {
+    var text = this.value;
+    if (text.length >= 1) {
+      answeredTask = true;
+    }
+    if(answeredCatch == true && answeredSum == true && answeredTask == true && answeredPurpose == true) {
+      $('#doneExperiment').show();
+    }
+  });
+}
+
+function doneExperiment() {
+  $('#questionText').hide();
+	$('#doneText').show();
+  $('#submitButton').show();
+	$("#submitButton").css('visibility','visible');
+  $('.progress').hide();
+	$('#commentBox').show();
+
+  assignExperimentInfo();
+
+}
+
+function assignExperimentInfo() {
+  responses['experimentName'] = experimentName;
+  responses['experimentVersion'] = experimentVersion;
+  responses['experimentTime'] = Math.round((currentTime() - startHITTime) * 10) / 10;
+
+  responses['studyID'] = studyID;
+  responses['sessionID'] = sessionID;
+
+  responses['browserName'] = browserInfo['name'];
+  responses['browserVersion'] = browserInfo['version'];
+  responses['displayWindowHeight'] = $(window).height();
+  responses['displayWindowWidth'] = $(window).width();
+  responses['displayScreenHeight'] = screen.height;
+  responses['displayScreenWidth'] = screen.width;
+
+  responses['change_key'] = document.querySelector('input[name="change_key"]:checked').value;
+  responses['gender'] = $('#gender :selected').text();
+  responses['age'] = document.getElementById('ageBox').value;
+
+}
+
+function submitData(outDir) {
+  responses['taskGuess'] = document.getElementById('taskGuess').value;
+  responses['purposeGuess'] = document.getElementById('purposeGuess').value;
+  responses['commentText'] = document.getElementById('commentBox').value;
+  responses['totalTime'] = Math.round((currentTime() - startHITTime) * 10) / 10;
+  // get data string from response array
+  var dataString = JSON.stringify(responses);
+
+  // post response to server
+  if (subjectID==null){
+    subjectID="pilot2";
+  }
+  console.log(subjectID);
+  console.log(dataString);
+  $.post("receive_data.php",
+         {dataString : dataString, subjectID: subjectID})
+
+  $('#redirectToProlific').show();
+  $('#urlProlific').text(urlProlific);
+  $('#countDown').text((finalCountDownClock).toString());
+  redirectTimer = setInterval(countDown, 1000);
+}
+
+function currentTime() {
+  return performance.now();
+
+}
+
+// pads numbers with leading 0s for filenames
+function pad(n) {
+  n = n + '';
+  return n.length >= 4 ? n : new Array(4 - n.length + 1).join(0) + n;
+
+}
+
+function getBrowser() {
+  var ua=navigator.userAgent,tem,M=ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+  if(/trident/i.test(M[1])) {
+    tem=/\brv[ :]+(\d+)/g.exec(ua) || [];
+    return {name:'IE',version:(tem[1]||'')};
+    }
+  if(M[1]==='Chrome') {
+    tem=ua.match(/\bOPR|Edge\/(\d+)/)
+    if(tem!=null) {
+      return {name:'Opera', version:tem[1]};
+      }
+    }
+  M=M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+  if((tem=ua.match(/version\/(\d+)/i))!=null) {
+    M.splice(1,1,tem[1]);
+  }
+  return {
+    name: M[0],
+    version: M[1]
+  };
+
+}
+
+// randomly shuffle elements of array
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+
+}
+
+// get block number
+function getBlockNum() {
+  var block = [];
+  for(var j = 0; j < nBlocks; j++) {
+    for(var i = 0; i < nTrialsPerBlock; i++){
+      block.push(j);
+    }
+  }
+  return block;
+
+}
+
+// generate trial blocks from objects
+function getTrialBlocks() {
+  var blocks = [];
+  for (var i = 0; i < nBlocks; i++) {
+    var curr_block = [];
+    for (var j = 0; j < nTrialsPerBlock; j ++) {
+      curr_block.push([area_keys[j], area_changes[area_keys[j]][i]]);
+    }
+    blocks.push(shuffle(curr_block));
+  }
+  return blocks.flat();
+}
+
+function preLoadFrames(trialToLoad) {
+  currTrial = trials[trialToLoad];
+  var trial_shape = currTrial.shape + "_" + currTrial.changeType;
+
+  var init = new Image();
+  init.src = "stimuli/" + trial_shape + ".png";
+
+  init.onload = function(){};
+
+  allImages[trial_shape] = init;
+}
+
+
+function countDown () {
+  finalCountDownClock--;
+  if (finalCountDownClock == 0) {
+    clearInterval(redirectTimer);
+    window.location = urlProlific;
+  } else {
+    $('#countDown').text((finalCountDownClock).toString());
+  }
+}
+
+// get random integer
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<style>
+body {
+  font-family: Helvetica,Arial;
+  font-size: 14pt;
+  height: 100%;
+  margin: 10 auto;
+}
+
+#instructions, #startInstructions,#testInstructions,#consentInstructions {
+	display:block;
+	max-width: 80%;
+	margin: 0 auto;
+	margin-top: 0px;
+  text-align: left;
+}
+
+#trialInstructions, #responseInstructions {
+	display:block;
+	max-width: 80%;
+	margin: 0 auto;
+	margin-top: 0px;
+  text-align: left;
+/*  margin-bottom: -1.2em;*/
+}
+
+#responseTimedOut {
+  display:block;
+  max-width: 80%;
+  margin: 0 auto;
+  margin-top: 0px;
+  text-align: left;
+  color: red;
+/*  margin-bottom: -1.2em;*/
+}
+
+#loadingNextTrial {
+  display:block;
+  max-width: 80%;
+  margin: 0 auto;
+  margin-top: 0px;
+  text-align: left;
+/*  margin-bottom: -1.2em;*/
+}
+
+
+#title, #browserCompat {
+  font-size: 18pt;
+  text-align: center;
+  margin: 0 auto;
+}
+canvas {
+  border: 1px solid black;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+input {
+  position: relative;
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#startExperiment, #runTest, #purposeButton, #submitDataButton, #doneExperiment, #consentButton {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+	color: black;
+	font-size:14pt;
+	border: 3px outset gray;
+	background-color: #4CAF50;
+	padding: 0px;
+	text-decoration: none;
+	font-weight: bold;
+  position: relative;
+  width: 150px;
+	margin-top:0px;
+	margin-bottom:0px;
+  border-radius: 8px;
+  transition-duration: 0.4s;
+}
+
+#startExperiment:hover, #runTest:hover, #revealImage:hover, #purposeButton:hover, #submitDataButton:hover, #doneExperiment:hover, #consentButton:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+#startExperiment:active, #runTest:active, #revealImage:active, #purposeButton:active, #submitDataButton:active, #doneExperiment:active, #consentButton:active {
+	background: gray;
+}
+
+.progress {
+  text-align: center;
+  display: none;
+  height: 15px;
+}
+
+#progressContainer {
+  text-align: center;
+  display: none;
+}
+
+#progressText {
+  font-size: 14pt;
+  color: black;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#progressOutline {
+  display: inline-block;
+  background: white;
+  border: 3px solid black;
+  width: 100px;
+  margin: 5 auto;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+#progressBar {
+  background: #4CAF50;
+  width: 0px;
+  margin-bottom: 10px;
+}
+
+.container {
+  margin: auto;
+}
+
+#container_img_test, #container_img_test2 {
+  position: absolute;
+  left: 50%;
+  top: 150px;
+  transform: translate(-50%, 150px);
+  margin: auto;
+  color: black;
+  background-color: black;
+  text-align: center;
+  width: 1000px;
+  height: 400px;
+}
+
+#container_img_real {
+  position: absolute;
+  left: 50%;
+  top: 150px;
+  transform: translate(-50%, 150px);
+  margin: auto;
+  color: black;
+  background-color: black;
+  text-align: center;
+  width: 1000px;
+  height: 400px;
+}
+
+#doneText, #questionText, #getDemos {
+	display:none;
+	max-width: 500px;
+	text-align:center;
+	margin: 10 auto;
+	padding-bottom:10px;
+	font-size:14pt
+}
+
+#doneText p, #questiontext p, #getDemos p {
+	font-size:12pt
+}
+
+.doneTextStyle, .questionTextStyle, .getDeosStyle {
+  display: none;
+}
+
+#commentBox {
+	display:none;
+}
+
+#submitButton {
+	display:block;
+  width: 100%;
+  margin-top: 500px;
+  margin-bottom: 50px;
+}
+
+</style>
