@@ -2,6 +2,7 @@
 An Approximate Representation of Objects Underlies Physical Reasoning
 
 Paper: https://psycnet.apa.org/fulltext/2023-80183-001.html
+
 OSF repository (containing behavioral data, stimuli, analysis code, and supplementary information): https://osf.io/z9dpu/
 
 **This repository contains code for experiment webpages and stimuli generation.**
